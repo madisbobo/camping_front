@@ -16,14 +16,14 @@
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
-                <label for="password" class="form-label">Kasutajanimi</label>
+                <label for="password" class="form-label">Parool</label>
                 <input v-model="password" type="text" id="password" class="form-control">
             </div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
-                <button type="submit" class="btn btn-dark mb-3">Logi Sisse</button>
+                <button @click="login" type="submit" class="btn btn-dark mb-3">Logi Sisse</button>
             </div>
         </div>
 
@@ -50,8 +50,39 @@ export default {
     data() {
         return {
             username: '',
-            password: ''
+            password: '',
+            message: '',
+            loginResponse: {
+                userId: 0,
+                roleName: ''
+            }
         }
+    },
+
+    methods: {
+        login() {
+            this.message = ''
+            if (this.username === '' || this.password === '') {
+                this.message = 'Täida kõik väljad'
+            } else {
+                this.sendLoginRequest();
+            }
+        },
+        sendLoginRequest() {
+            this.$http.get("/login", {
+                    params: {
+                        username: this.username,
+                        password: this.password
+                    }
+                }
+            ).then(response => {
+                alert("success")
+                this.loginResponse = response.data
+            }).catch(error => {
+                alert("error")
+                const errorResponseBody = error.response.data
+            })
+        },
     }
 }
 </script>
