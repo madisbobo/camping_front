@@ -10,14 +10,14 @@
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
                 <label for="username" class="form-label">Kasutajanimi</label>
-                <input type="text" id="username" class="form-control">
+                <input v-model="username" type="text" id="username" class="form-control">
             </div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
                 <label for="password" class="form-label">Kasutajanimi</label>
-                <input type="text" id="password" class="form-control">
+                <input v-model="password" type="text" id="password" class="form-control">
             </div>
         </div>
 
@@ -45,7 +45,14 @@
 
 <script>
 export default {
-    name: "LoginView.vue"
+    name: "LoginView.vue",
+
+    data() {
+        return {
+            username: '',
+            password: ''
+        }
+    }
 }
 </script>
 
