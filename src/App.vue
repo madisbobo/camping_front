@@ -1,10 +1,33 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/login">Login</router-link>
+    <router-link to="/">Avaleht</router-link> |
+    <router-link to="/listings">Kõik pakkumised</router-link> |
+    <router-link v-if="userId === null" to="/login">Logi sisse</router-link>
+        <template v-else>
+            <router-link to="/mylistings">Minu asjad</router-link> |
+            <router-link to="/#">Logi välja</router-link>
+        </template>
+
   </nav>
-  <router-view/>
+  <router-view @event-update-nav-menu="updateNavMenu"/>
 </template>
+
+<script>
+    export default {
+        data() {
+            return {
+                userId: sessionStorage.getItem('userId'),
+                roleName: sessionStorage.getItem('roleName')
+            }
+        },
+        methods: {
+            updateNavMenu() {
+                this.userId = sessionStorage.getItem('userId')
+                this.roleName = sessionStorage.getItem('roleName')
+            },
+        }
+    }
+</script>
 
 <style>
 #app {

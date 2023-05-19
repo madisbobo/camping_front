@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-      <font-awesome-icon :icon="['fas', 'user-secret']" />
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
