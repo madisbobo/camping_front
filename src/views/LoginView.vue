@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
     name: "LoginView.vue",
 
@@ -55,6 +57,10 @@ export default {
             loginResponse: {
                 userId: 0,
                 roleName: ''
+            },
+            errorResponse: {
+                message: '',
+                errorCode: 0
             }
         }
     },
@@ -78,9 +84,20 @@ export default {
             ).then(response => {
                 alert("success")
                 this.loginResponse = response.data
+                sessionStorage.setItem('userId', this.loginResponse.userId)
+                sessionStorage.setItem('roleName', this.loginResponse.userId)
+                this.$emit('event-update-nav-menu')
+                router.push({name:'homeRoute'})
             }).catch(error => {
-                alert("error")
-                const errorResponseBody = error.response.data
+                this.errorResponse = error.response.data
+                if (this.errorResponse.errorCode === 111) {
+                    this.message = this.errorResponse.message
+                    alert(this.errorResponse.message)
+                } else {
+                    alert(this.errorResponse.errorCode)
+                    router.push({name:'errorRoute'})
+                }
+
             })
         },
     }
