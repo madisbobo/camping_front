@@ -1,5 +1,8 @@
 <template>
-    <div class="container">
+
+    <div @keydown.enter="login" class="container">
+
+        <AlertDanger :message="message"/>
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
@@ -45,9 +48,11 @@
 
 <script>
 import router from "@/router";
+import AlertDanger from "@/components/alerts/AlertDanger.vue";
 
 export default {
     name: "LoginView.vue",
+    components: {AlertDanger},
 
     data() {
         return {
@@ -82,7 +87,6 @@ export default {
                     }
                 }
             ).then(response => {
-                alert("success")
                 this.loginResponse = response.data
                 sessionStorage.setItem('userId', this.loginResponse.userId)
                 sessionStorage.setItem('roleName', this.loginResponse.userId)
@@ -92,7 +96,6 @@ export default {
                 this.errorResponse = error.response.data
                 if (this.errorResponse.errorCode === 111) {
                     this.message = this.errorResponse.message
-                    alert(this.errorResponse.message)
                 } else {
                     alert(this.errorResponse.errorCode)
                     router.push({name:'errorRoute'})
@@ -103,7 +106,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

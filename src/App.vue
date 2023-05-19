@@ -1,9 +1,11 @@
 <template>
   <nav>
     <router-link to="/">Avaleht</router-link> |
+    <router-link to="/listings">Kõik Pakkumised</router-link> |
     <router-link v-if="userId === null" to="/login">Logi Sisse</router-link>
     <template v-else>
-        <router-link to="/#">Logi Välja</router-link>
+        <router-link to="#" >Minu Asja</router-link> |
+        <router-link to="#" @click="handleLogout" >Logi Välja</router-link>
     </template>
   </nav>
 
@@ -12,6 +14,8 @@
 
 
 <script>
+    import router from "@/router";
+
     export default {
         data() {
             return {
@@ -24,6 +28,11 @@
                 this.userId = sessionStorage.getItem('userId')
                 this.roleName = sessionStorage.getItem('roleName')
             },
+            handleLogout() {
+                sessionStorage.clear()
+                this.updateNavMenu()
+                router.push({name: 'homeRoute'})
+            }
         }
     }
 </script>
