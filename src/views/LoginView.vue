@@ -1,5 +1,8 @@
 <template>
-    <div class="container">
+    <div @keydown.enter="login" class="container">
+        <div class="row">
+            <AlertDanger :message="message"/>
+        </div>
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
@@ -23,7 +26,7 @@
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
-                <button @click="login" type="submit" class="btn btn-dark mb-3">Logi Sisse</button>
+                <button @click.="login" type="submit" class="btn btn-dark mb-3">Logi Sisse</button>
             </div>
         </div>
 
@@ -44,9 +47,11 @@
 
 <script>
 import router from "@/router";
+import AlertDanger from "@/components/alerts/AlertDanger.vue";
 
 export default {
     name: "LoginView.vue",
+    components: {AlertDanger},
 
     data() {
         return {
@@ -98,7 +103,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-
-</style>

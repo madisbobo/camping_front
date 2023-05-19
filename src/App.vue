@@ -5,7 +5,7 @@
     <router-link v-if="userId === null" to="/login">Logi sisse</router-link>
         <template v-else>
             <router-link to="/mylistings">Minu asjad</router-link> |
-            <router-link to="/#">Logi välja</router-link>
+            <router-link to="/#" @click="handleLogout">Logi välja</router-link>
         </template>
 
   </nav>
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+    import router from "@/router";
+
     export default {
         data() {
             return {
@@ -24,6 +26,11 @@
             updateNavMenu() {
                 this.userId = sessionStorage.getItem('userId')
                 this.roleName = sessionStorage.getItem('roleName')
+            },
+            handleLogout() {
+                sessionStorage.clear()
+                this.updateNavMenu()
+                router.push({name: 'home'})
             },
         }
     }
