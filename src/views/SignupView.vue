@@ -1,12 +1,11 @@
 <template>
-
-    <div @keydown.enter="login" class="container">
+    <div @keydown.enter="signup" class="container">
 
         <AlertDanger :message="message"/>
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
-                <h2>Sisselogimine</h2>
+                <h2>Registreeri end kasutajaks</h2>
             </div>
         </div>
 
@@ -26,83 +25,65 @@
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
-                <button @click="login" type="submit" class="btn btn-dark mb-3">Logi Sisse</button>
+                <button @click="signup" type="submit" class="btn btn-dark mb-3">Registreeri</button>
             </div>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col col-4 mb-4">
-                <h5>Sul ei ole veel kasutajat?</h5>
-            </div>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col col-4 mb-4">
-                <router-link to="/signup" class="btn btn-outline-dark mb-3">Registreeri</router-link>
-            </div>
-        </div>
 
     </div>
-
 </template>
 
 <script>
-import router from "@/router";
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
+import router from "@/router";
 
 export default {
-    name: "LoginView.vue",
+    name: "SignupView",
     components: {AlertDanger},
-
     data() {
         return {
             username: '',
             password: '',
             message: '',
-            loginResponse: {
-                userId: 0,
-                roleName: ''
-        },
+            newUser: {
+                username: this.username,
+                password: this.password
+            },
             errorResponse: {
                 message: '',
                 errorCode: 0
             }
         }
     },
-
     methods: {
-        login() {
+        signup() {
             this.message = ''
             if (this.username === '' || this.password === '') {
                 this.message = 'Täida kõik väljad'
             } else {
-                this.sendLoginRequest();
+                this.sendSignupRequest();
             }
         },
-        sendLoginRequest() {
-            this.$http.get("/login", {
-                    params: {
-                        username: this.username,
-                        password: this.password
-                    }
-                }
+        sendSignupRequest () {
+            this.$http.post("/signup", this.newUser
             ).then(response => {
-                this.loginResponse = response.data
-                sessionStorage.setItem('userId', this.loginResponse.userId)
-                sessionStorage.setItem('roleName', this.loginResponse.userId)
-                this.$emit('event-update-nav-menu')
                 router.push({name:'homeRoute'})
             }).catch(error => {
                 this.errorResponse = error.response.data
-                if (this.errorResponse.errorCode === 111) {
-                    this.message = this.errorResponse.message
+                if (this.errorResponse.errorCode === 222) {
+                    this.message = this.errorResponse.message;
                 } else {
-                    alert(this.errorResponse.errorCode)
                     router.push({name:'errorRoute'})
                 }
-
             })
-        },
+
+        }
     }
+
+
 }
 </script>
+
+<style scoped>
+
+</style>
