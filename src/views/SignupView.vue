@@ -60,7 +60,11 @@ export default {
             errorResponse: {
                 message: '',
                 errorCode: 0
-            }
+            },
+            loginResponse: {
+                userId: 0,
+                roleName: ''
+            },
         }
     },
     methods: {
@@ -76,11 +80,14 @@ export default {
                 this.sendSignupRequest();
             }
         },
-        sendSignupRequest () {
-            alert(this.newUser.username)
+        sendSignupRequest() {
             this.$http.post("/signup", this.newUser
             ).then(response => {
-                router.push({name: 'homeRoute'})
+                this.loginResponse = response.data
+                sessionStorage.setItem('userId', this.loginResponse.userId)
+                sessionStorage.setItem('roleName', this.loginResponse.roleName)
+                this.$emit('event-update-nav-menu')
+                router.push({name: 'signupInfoRoute'})
             }).catch(error => {
                 this.errorResponse = error.response.data
                 if (this.errorResponse.errorCode === 222) {
