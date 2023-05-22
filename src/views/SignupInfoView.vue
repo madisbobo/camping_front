@@ -44,7 +44,7 @@
         <div class="row justify-content-center mb-4 mt-4">
             <div class="col col-4">
                 <button @click="signupAddContact" type="submit" class="btn btn-dark me-3">Registreeri</button>
-                <button @click="signupAddContact" type="submit" class="btn btn-dark ms-3">Loobu</button>
+                <button @click="this.$emit('event-abort-signup')" type="button" class="btn btn-dark ms-3">Loobu</button>
             </div>
 
         </div>
@@ -56,6 +56,7 @@
 <script>
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
 import ImageInput from "@/components/ImageInput.vue";
+import router from "@/router";
 
 export default {
     name: "SignupInfoView",
@@ -76,7 +77,6 @@ export default {
     },
     methods: {
         setImage(selectedImage) {
-            alert(JSON.stringify(selectedImage))
             this.userContact.imageData = selectedImage
         },
         signupAddContact: function () {
@@ -84,7 +84,7 @@ export default {
             ).then(response => {
                 const responseBody = response.data
             }).catch(error => {
-                const errorResponseBody = error.response.data
+                router.push({name: 'errorRoute'})
             })
         },
 

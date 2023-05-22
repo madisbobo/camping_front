@@ -10,13 +10,16 @@
   </nav>
 
   <router-view @event-update-nav-menu="updateNavMenu"/>
+  <signup-info-view @event-abort-signup="handleLogout"/>
 </template>
 
 
 <script>
     import router from "@/router";
+    import SignupInfoView from "@/views/SignupInfoView.vue";
 
     export default {
+        components: {SignupInfoView},
         data() {
             return {
                 userId: sessionStorage.getItem('userId'),
@@ -25,6 +28,7 @@
         },
         methods: {
             updateNavMenu() {
+                sessionStorage.clear()
                 this.userId = sessionStorage.getItem('userId')
                 this.roleName = sessionStorage.getItem('roleName')
             },
