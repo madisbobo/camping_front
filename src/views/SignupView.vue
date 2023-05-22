@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div @keydown.enter="signup" class="container">
         <AlertDanger :message="message"/>
 
         <div class="row justify-content-center">
@@ -18,7 +18,14 @@
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
                 <label for="password" class="form-label">Salasõna</label>
-                <input v-model="password" type="text" id="password" class="form-control">
+                <input v-model="password" type="password" id="password" class="form-control">
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col col-4 mb-4">
+                <label for="password" class="form-label">Korda salasõna</label>
+                <input v-model="repeat_password" type="password" id="password" class="form-control">
             </div>
         </div>
 
@@ -36,13 +43,18 @@ import AlertDanger from "@/components/alerts/AlertDanger.vue";
 import router from "@/router";
 
 export default {
-    name: "UsersView",
+    name: "SignupView",
     components: {AlertDanger},
     data() {
         return {
             username: '',
             password: '',
+            repeat_password: '',
             message: '',
+            loginResponse: {
+                userId: 0,
+                roleName: ''
+            },
             newUser: {
                 username: '',
                 password: ''
@@ -58,14 +70,22 @@ export default {
             this.message = ''
             if (this.username === '' || this.password === '') {
                 this.message = 'Täida kõik väljad!'
+            } else if (this.password !== this.repeat_password) {
+                this.message = 'Kaks parooli peavad kattuma'
             } else {
+                this.newUser.username = this.username
+                this.newUser.password = this.password
                 this.sendSignupRequest();
             }
         },
         sendSignupRequest() {
             this.$http.post("/signup", this.newUser
-
             ).then(response => {
+                this.loginResponse = response.data
+                sessionStorage.setItem('userId', this.loginResponse.userId)
+                sessionStorage.setItem('roleName', this.loginResponse.roleName)
+                this.$emit('event-update-nav-menu')
+                alert(this.loginResponse.userId)
                 router.push({name: 'homeRoute'})
 
             }).catch(error => {
