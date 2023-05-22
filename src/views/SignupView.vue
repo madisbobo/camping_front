@@ -54,8 +54,8 @@ export default {
             repeat_password: '',
             message: '',
             newUser: {
-                username: this.username,
-                password: this.password
+                username: '',
+                password: ''
             },
             errorResponse: {
                 message: '',
@@ -71,10 +71,13 @@ export default {
             } else if (this.password !== this.repeat_password) {
                 this.message = 'Kaks parooli peavad kattuma'
             } else {
+                this.newUser.username = this.username
+                this.newUser.password = this.password
                 this.sendSignupRequest();
             }
         },
         sendSignupRequest () {
+            alert(this.newUser.username)
             this.$http.post("/signup", this.newUser
             ).then(response => {
                 router.push({name: 'homeRoute'})
