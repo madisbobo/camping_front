@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav style="background-color: #90EE90">
     <router-link to="/">Avaleht</router-link> |
     <router-link to="/listings">Kõik pakkumised</router-link> |
     <router-link v-if="userId === null" to="/login">Logi sisse</router-link>
@@ -30,7 +30,7 @@
             handleLogout() {
                 sessionStorage.clear()
                 this.updateNavMenu()
-                router.push({name: 'home'})
+                router.push({name: 'homeRoute'})
             },
         }
     }
