@@ -85,9 +85,7 @@ export default {
                 sessionStorage.setItem('userId', this.loginResponse.userId)
                 sessionStorage.setItem('roleName', this.loginResponse.roleName)
                 this.$emit('event-update-nav-menu')
-                alert(this.loginResponse.userId)
-                router.push({name: 'homeRoute'})
-
+                router.push({name: 'signupInfoRoute'})
             }).catch(error => {
                 this.errorResponse = error.response.data
                 if (this.errorResponse.errorCode === 222) {

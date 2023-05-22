@@ -10,6 +10,7 @@
 
   </nav>
   <router-view @event-update-nav-menu="updateNavMenu"/>
+
 </template>
 
 <script>
