@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-    name: 'ImageImput',
+    name: 'ImageInput',
     data() {
         return {
             pictureDataBase64: ''
