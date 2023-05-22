@@ -25,6 +25,13 @@
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
+                <label for="password" class="form-label">Korda salasõna</label>
+                <input v-model="repeat_password" type="password" id="password" class="form-control">
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col col-4 mb-4">
                 <button @click="signup" type="submit" class="btn btn-dark mb-3">Registreeri</button>
             </div>
         </div>
@@ -44,6 +51,7 @@ export default {
         return {
             username: '',
             password: '',
+            repeat_password: '',
             message: '',
             newUser: {
                 username: this.username,
@@ -59,7 +67,9 @@ export default {
         signup() {
             this.message = ''
             if (this.username === '' || this.password === '') {
-                this.message = 'Täida kõik väljad'
+                this.message = 'Täida kõik väljad!'
+            } else if (this.password !== this.repeat_password) {
+                this.message = 'Kaks parooli peavad kattuma'
             } else {
                 this.sendSignupRequest();
             }
@@ -67,13 +77,13 @@ export default {
         sendSignupRequest () {
             this.$http.post("/signup", this.newUser
             ).then(response => {
-                router.push({name:'homeRoute'})
+                router.push({name: 'homeRoute'})
             }).catch(error => {
                 this.errorResponse = error.response.data
                 if (this.errorResponse.errorCode === 222) {
                     this.message = this.errorResponse.message;
                 } else {
-                    router.push({name:'errorRoute'})
+                    router.push({name: 'errorRoute'})
                 }
             })
 
