@@ -15,7 +15,7 @@
                 <form>
                     <div class="mb-3 text-start">
                         <label for="firstName" class="form-label ">Eesnimi *</label>
-                        <input v-model="firstName" type="text" id="firstName" class="form-control">
+                        <input v-model="userContact.firstName" type="text" id="firstName" class="form-control">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="lastName" class="form-label">Perekonnanimi *</label>
@@ -34,7 +34,8 @@
 
             <!--Add profile image-->
             <div class="col col-4 mb-4">
-                <img src="../assets/logo.png" height="200" width="200" alt="profile image"/>
+                <img src="../assets/logo.png" height="200" width="200" alt="profile image" @event-emit-base64="setImage"/>
+                <ImageImput/>
                 <div/>
             </div>
         </div>
@@ -54,13 +55,28 @@
 
 <script>
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
+import ImageImput from "@/components/ImageInput.vue";
 
 export default {
     name: "SignupInfoView",
-    components: {AlertDanger}
+    components: {ImageImput, AlertDanger},
+    data() {
+        return {
+            userContact: {
+                userId: 0,
+                firstName: '',
+                lastName: '',
+                email: '',
+                phoneNo: '',
+                imageData: ''
+            }
+
+        }
+    },
+    methods: {
+        setImage(selectedImage) {
+            this.userContact.imageData = selectedImage
+        }
+    }
 }
 </script>
-
-<style scoped>
-
-</style>
