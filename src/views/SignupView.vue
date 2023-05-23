@@ -12,14 +12,14 @@
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
                 <label for="username" class="form-label">Kasutajanimi</label>
-                <input v-model="username" type="text" id="username" class="form-control">
+                <input v-model="newUser.username" type="text" id="username" class="form-control">
             </div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
                 <label for="password" class="form-label">Salasõna</label>
-                <input v-model="password" type="password" id="password" class="form-control">
+                <input v-model="newUser.password" type="password" id="password" class="form-control">
             </div>
         </div>
 
@@ -49,8 +49,6 @@ export default {
     components: {AlertDanger},
     data() {
         return {
-            username: '',
-            password: '',
             repeat_password: '',
             message: '',
             newUser: {
@@ -70,13 +68,11 @@ export default {
     methods: {
         signup() {
             this.message = ''
-            if (this.username === '' || this.password === '') {
+            if (this.newUser.username === '' || this.newUser.password === '') {
                 this.message = 'Täida kõik väljad!'
-            } else if (this.password !== this.repeat_password) {
+            } else if (this.newUser.password !== this.repeat_password) {
                 this.message = 'Kaks parooli peavad kattuma'
             } else {
-                this.newUser.username = this.username
-                this.newUser.password = this.password
                 this.sendSignupRequest();
             }
         },
