@@ -47,8 +47,6 @@ export default {
     components: {AlertDanger},
     data() {
         return {
-            username: '',
-            password: '',
             repeat_password: '',
             message: '',
             loginResponse: {
@@ -68,13 +66,11 @@ export default {
     methods: {
         signup() {
             this.message = ''
-            if (this.username === '' || this.password === '') {
+            if (this.newUser.username === '' || this.newUser.password === '') {
                 this.message = 'Täida kõik väljad!'
-            } else if (this.password !== this.repeat_password) {
+            } else if (this.newUser.password !== this.repeat_password) {
                 this.message = 'Kaks parooli peavad kattuma'
             } else {
-                this.newUser.username = this.username
-                this.newUser.password = this.password
                 this.sendSignupRequest();
             }
         },
@@ -84,6 +80,7 @@ export default {
                 this.loginResponse = response.data
                 sessionStorage.setItem('userId', this.loginResponse.userId)
                 sessionStorage.setItem('roleName', this.loginResponse.roleName)
+                sessionStorage.setItem('username', this.username)
                 this.$emit('event-update-nav-menu')
                 router.push({name: 'signupInfoRoute'})
             }).catch(error => {

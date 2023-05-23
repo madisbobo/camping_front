@@ -76,16 +76,6 @@ export default {
             this.userContact.imageData = selectedImage
         },
 
-        signupAddContact() {
-            this.$http.post("/signup-info", this.userContact
-            ).then(response => {
-                const responseBody = response.data
-                router.push({name: 'homeRoute'})
-            }).catch(error => {
-                router.push({name: 'errorRoute'})
-            })
-        },
-
         abortSignup() {
             this.$http.delete("/signup-info", {
                     params: {
@@ -100,6 +90,16 @@ export default {
                 router.push({name: 'errorRoute'})
             })
         },
+        signupAddContact() {
+            this.$http.post("/signup-info", this.userContact
+            ).then(response => {
+                const responseBody = response.data
+                router.push({name: 'homeRoute'})
+            }).catch(error => {
+                router.push({name: 'errorRoute'})
+            })
+        },
+
     }
 }
 </script>

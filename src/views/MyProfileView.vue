@@ -12,19 +12,19 @@
 
                 <form>
                     <div class="mb-3 text-start">
-                        <h3>Eesnimi:</h3>
+                        <h5>Eesnimi:</h5>
                         <p>{{ userContact.firstName }}</p>
                     </div>
                     <div class="mb-3 text-start">
-                        <h3>Perekonnanimi:</h3>
+                        <h5>Perekonnanimi:</h5>
                         <p>{{ userContact.lastName }}</p>
                     </div>
                     <div class="mb-3 text-start">
-                        <h3>Email:</h3>
+                        <h5>Email:</h5>
                         <p>{{ userContact.email }}</p>
                     </div>
                     <div class="mb-3 text-start">
-                        <h3>Telefoni Nr:</h3>
+                        <h5>Telefoni Nr:</h5>
                         <p>{{ userContact.phoneNo }}</p>
                     </div>
                 </form>
@@ -74,7 +74,7 @@ export default {
         getContact() {
             this.$http.get("/my-profile", {
                     params: {
-                        userId: this.userContact.userId
+                        userId: this.userId
                     }
                 }
             ).then(response => {
