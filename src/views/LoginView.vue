@@ -90,6 +90,7 @@ export default {
                 this.loginResponse = response.data
                 sessionStorage.setItem('userId', this.loginResponse.userId)
                 sessionStorage.setItem('roleName', this.loginResponse.roleName)
+                sessionStorage.setItem('username', this.username)
                 this.$emit('event-update-nav-menu')
                 router.push({name:'homeRoute'})
             }).catch(error => {

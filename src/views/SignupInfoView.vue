@@ -1,5 +1,5 @@
 <template>
-    <div @keydown.enter="signupAddContact" class="container">
+    <div @keydown.enter="signupAddContact" class="container mt-4">
 
         <AlertDanger :message="message"/>
 

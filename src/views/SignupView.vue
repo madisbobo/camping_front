@@ -1,5 +1,5 @@
 <template>
-    <div @keydown.enter="signup" class="container">
+    <div @keydown.enter="signup" class="container mt-4">
 
         <AlertDanger :message="message"/>
 
@@ -86,6 +86,7 @@ export default {
                 this.loginResponse = response.data
                 sessionStorage.setItem('userId', this.loginResponse.userId)
                 sessionStorage.setItem('roleName', this.loginResponse.roleName)
+                sessionStorage.setItem('username', this.username)
                 this.$emit('event-update-nav-menu')
                 router.push({name: 'signupInfoRoute'})
             }).catch(error => {

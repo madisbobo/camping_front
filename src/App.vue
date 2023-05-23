@@ -1,66 +1,61 @@
 <template>
 
-<!--    <nav class="navbar navbar-expand-xl navbar-light bg-light">
+    <nav class="navbar navbar-expand-xl navbar-light bg-light">
         <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav justify-content-center me-auto mb-2 mb-lg-0">
+
+            <div class="col col-2 collapse navbar-collapse" id="navbarSupportedContent"></div>
+
+
+            <div class=" collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-xl-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Avaleht</a>
+                        <router-link class="nav-link" to="/">Avaleht</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Kõik Pakkumised</a>
+                        <router-link class="nav-link" to="/listings">Kõik Pakkumised</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Blogi</a>
+                        <router-link class="nav-link" to="/blog">Blogi</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Kontakt</a>
+                        <router-link class="nav-link" to="/contact">Kontakt</router-link>
                     </li>
                 </ul>
             </div>
 
-            <div class="d-flex align-items-center me-5">
+            <div v-if="userId === null" class="col col-2 d-flex align-items-center">
+                <router-link class="nav-link me-3" to="/login">Logi Sisse</router-link>
+                <router-link class="nav-link" to="/signup">Registreeri</router-link>
+            </div>
+
+
+            <template v-else>
+            <div class="col col-2 d-flex align-items-center">
                 <div class="dropdown">
-                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow text-decoration-none" href="#" id="navbarDropdownMenuAvatar" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        username1
+                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow text-decoration-none" href="#"
+                       id="navbarDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ username }}
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuAvatar">
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenu">
                         <li>
-                            <a class="dropdown-item" href="#">Minu Broneeringud</a>
+                            <router-link class="dropdown-item" to="/my-bookings">Minu Broneeringud</router-link>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">Minu Pakkumised</a>
+                            <router-link class="dropdown-item" to="my-listings">Minu Pakkumised</router-link>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">Minu Profiil</a>
+                            <router-link class="dropdown-item" to="account/my-profile">Minu Profiil</router-link>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">Logi Välja</a>
+                            <router-link class="dropdown-item" to="#" @click="handleLogout">Logi Välja</router-link>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
-    </nav>-->
-
-
-
-        <nav>
-            <router-link to="/">Avaleht</router-link>
-            |
-            <router-link to="/listings">Kõik Pakkumised</router-link>
-            |
-            <router-link to="/blog">Blogi</router-link>
-            |
-            <router-link to="/contact">Kontakt</router-link>
-            |
-            <router-link v-if="userId === null" to="/login">Logi Sisse</router-link>
-            <template v-else>
-                <router-link to="#">Minu Asja</router-link>
-                |
-                <router-link to="#" @click="handleLogout">Logi Välja</router-link>
             </template>
-        </nav>
+        </div>
+    </nav>
+
 
     <router-view @event-update-nav-menu="updateNavMenu"/>
 </template>
@@ -75,13 +70,16 @@ export default {
     data() {
         return {
             userId: sessionStorage.getItem('userId'),
-            roleName: sessionStorage.getItem('roleName')
+            roleName: sessionStorage.getItem('roleName'),
+            username: sessionStorage.getItem('username')
+
         }
     },
     methods: {
         updateNavMenu() {
             this.userId = sessionStorage.getItem('userId')
             this.roleName = sessionStorage.getItem('roleName')
+            this.username = sessionStorage.getItem('username')
         },
         handleLogout() {
             sessionStorage.clear()
