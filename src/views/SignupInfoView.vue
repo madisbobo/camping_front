@@ -44,7 +44,7 @@
         <div class="row justify-content-center mb-4 mt-4">
             <div class="col col-4">
                 <button @click="signupAddContact" type="submit" class="btn btn-dark me-3">Registreeri</button>
-                <button @click="this.$emit('event-abort-signup')" type="button" class="btn btn-dark ms-3">Loobu</button>
+                <button @click="abortSignup" type="button" class="btn btn-dark ms-3">Loobu</button>
             </div>
 
         </div>
@@ -79,14 +79,30 @@ export default {
         setImage(selectedImage) {
             this.userContact.imageData = selectedImage
         },
-        signupAddContact: function () {
+
+        abortSignup() {
+            this.$http.delete("/signup-info", {
+                    params: {
+                        userId: this.userContact.userId
+                    }
+                }
+            ).then(response => {
+                sessionStorage.clear()
+                this.$emit('event-update-nav-menu')
+                router.push({name: 'homeRoute'})
+            }).catch(error => {
+                router.push({name: 'errorRoute'})
+            })
+        },
+
+        signupAddContact() {
             this.$http.post("/signup-info", this.userContact
             ).then(response => {
                 const responseBody = response.data
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
-        },
+        }
 
     }
 }

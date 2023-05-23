@@ -10,7 +10,6 @@
   </nav>
 
   <router-view @event-update-nav-menu="updateNavMenu"/>
-  <signup-info-view @event-abort-signup="handleLogout"/>
 </template>
 
 
@@ -28,7 +27,6 @@
         },
         methods: {
             updateNavMenu() {
-                sessionStorage.clear()
                 this.userId = sessionStorage.getItem('userId')
                 this.roleName = sessionStorage.getItem('roleName')
             },
