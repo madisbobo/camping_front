@@ -72,27 +72,10 @@ export default {
         }
     },
     methods: {
-        abortSignup() {
-            sessionStorage.clear()
-            this.$emit('event-update-nav-menu')
-            this.deleteHalfArsedSignup()
-            router.push({name: 'homeRoute'})
-        },
-        deleteHalfArsedSignup() {
-            this.$http.delete("/signup", {
-                    params: {
-                        userId: this.userContact.userId,
-                        }
-                }
-            ).then(response => {
-                const responseBody = response.data
-            }).catch(error => {
-                router.push({name: 'errorRoute'})
-            })
-        },
         setImage(selectedImage) {
             this.userContact.imageData = selectedImage
         },
+
         signupAddContact() {
             this.$http.post("/signup-info", this.userContact
             ).then(response => {
@@ -103,6 +86,21 @@ export default {
             })
         },
 
+        abortSignup() {
+            alert("SIIN" + this.userContact.userId)
+            this.$http.delete("/signup", {
+                    params: {
+                        userId: this.userContact.userId
+                    }
+                }
+            ).then(response => {
+                sessionStorage.clear()
+                this.$emit('event-update-nav-menu')
+                router.push({name: 'homeRoute'})
+            }).catch(error => {
+                router.push({name: 'errorRoute'})
+            })
+        },
     }
 }
 </script>
