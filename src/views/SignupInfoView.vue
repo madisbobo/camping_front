@@ -60,7 +60,7 @@ import router from "@/router";
 
 export default {
     name: "SignupInfoView",
-    components: {ImageInput: ImageInput, AlertDanger},
+    components: {ImageInput, AlertDanger},
     data() {
         return {
             message: '',
@@ -98,7 +98,7 @@ export default {
         signupAddContact() {
             this.$http.post("/signup-info", this.userContact
             ).then(response => {
-                const responseBody = response.data
+                router.push({name: 'homeRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
