@@ -87,8 +87,7 @@ export default {
         },
 
         abortSignup() {
-            alert("SIIN" + this.userContact.userId)
-            this.$http.delete("/signup", {
+            this.$http.delete("/signup-info", {
                     params: {
                         userId: this.userContact.userId
                     }

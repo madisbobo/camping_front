@@ -5,6 +5,7 @@ import ErrorView from "@/views/ErrorView.vue";
 import ListingsView from "@/views/ListingsView.vue";
 import SignupView from "@/views/SignupView.vue";
 import SignupInfoView from "@/views/SignupInfoView.vue";
+import MyListingsView from "@/views/MyListingsView.vue";
 
 const routes = [
   {
@@ -28,12 +29,17 @@ const routes = [
     component: ListingsView
   },
   {
+    path: '/my-listings',
+    name: 'myListingsRoute',
+    component: MyListingsView
+  },
+  {
     path: '/signup',
     name: 'signupRoute',
     component: SignupView
   },
   {
-    path: '/signupInfo',
+    path: '/signup-info',
     name: 'signupInfoRoute',
     component: SignupInfoView
   }

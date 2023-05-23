@@ -1,10 +1,10 @@
 <template>
-    <h1 class="mt-4">Kontakt</h1>
+    <h1 class="mt-4">Blogi</h1>
 </template>
 
 <script>
 export default {
-    name: "ContactView"
+    name: "BlogView"
 }
 </script>
 
