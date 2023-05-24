@@ -44,7 +44,7 @@
                             <router-link class="dropdown-item" to="my-listings">Minu Pakkumised</router-link>
                         </li>
                         <li>
-                            <router-link class="dropdown-item" to="account/my-profile">Minu Profiil</router-link>
+                            <router-link class="dropdown-item" to="my-profile">Minu Profiil</router-link>
                         </li>
                         <li>
                             <router-link class="dropdown-item" to="#" @click="handleLogout">Logi Välja</router-link>

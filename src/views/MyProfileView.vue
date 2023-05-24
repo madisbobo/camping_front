@@ -12,19 +12,19 @@
 
                 <form>
                     <div class="mb-3 text-start">
-                        <h3>Eesnimi:</h3>
+                        <h5>Eesnimi:</h5>
                         <p>{{ userContact.firstName }}</p>
                     </div>
                     <div class="mb-3 text-start">
-                        <h3>Perekonnanimi:</h3>
+                        <h5>Perekonnanimi:</h5>
                         <p>{{ userContact.lastName }}</p>
                     </div>
                     <div class="mb-3 text-start">
-                        <h3>Email:</h3>
+                        <h5>Email:</h5>
                         <p>{{ userContact.email }}</p>
                     </div>
                     <div class="mb-3 text-start">
-                        <h3>Telefoni Nr:</h3>
+                        <h5>Telefoni Nr:</h5>
                         <p>{{ userContact.phoneNo }}</p>
                     </div>
                 </form>
@@ -40,41 +40,43 @@
         <!--Buttons -->
         <div class="row mb-4 mt-4 justify-content-center">
             <div class="col col-4">
-                <button @click="editContact" type="submit" class="btn btn-dark me-3">Muuda andmeid</button>
+                <button @click="editContact" type="button" class="btn btn-dark me-3">Muuda andmeid</button>
             </div>
-
         </div>
 
 
+
     </div>
+
 </template>
 
 <script>
-import AlertDanger from "@/components/alerts/AlertDanger.vue";
-import ImageInput from "@/components/ImageInput.vue";
 import router from "@/router";
+import Modal from "@/components/modals/Modal.vue";
 
 export default {
     name: "MyProfileView",
-    components: {ImageInput, AlertDanger},
+    components: {Modal},
     data() {
         return {
             message: '',
             userId: Number(sessionStorage.getItem('userId')),
             userContact: {
+                userId: null,
                 firstName: '-',
                 lastName: '-',
                 email: '-',
                 phoneNo: '-',
                 imageData: ''
-            }
+            },
+            showModal: false,
         }
     },
     methods: {
         getContact() {
             this.$http.get("/my-profile", {
                     params: {
-                        userId: this.userContact.userId
+                        userId: this.userId
                     }
                 }
             ).then(response => {
@@ -83,13 +85,13 @@ export default {
                 router.push({name: 'errorRoute'})
             })
         },
+        editContact() {
+            router.push({name: 'editMyProfileRoute'})
+
+        }
     },
     mounted() {
         this.getContact()
     }
 }
 </script>
-
-<style scoped>
-
-</style>
