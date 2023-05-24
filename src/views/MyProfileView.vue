@@ -40,9 +40,8 @@
         <!--Buttons -->
         <div class="row mb-4 mt-4 justify-content-center">
             <div class="col col-4">
-                <button @click="editContact" type="submit" class="btn btn-dark me-3">Muuda andmeid</button>
+                <button @click="editContact" type="button" class="btn btn-dark me-3">Muuda andmeid</button>
             </div>
-
         </div>
 
 
@@ -83,6 +82,10 @@ export default {
                 router.push({name: 'errorRoute'})
             })
         },
+        editContact() {
+            router.push({name: 'editMyProfileRoute'})
+
+        }
     },
     mounted() {
         this.getContact()
