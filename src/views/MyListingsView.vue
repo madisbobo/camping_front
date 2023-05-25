@@ -18,7 +18,7 @@
                                 <div class="d-flex justify-content-between">
                                     <p class="card-text text-start">4.7 <font-awesome-icon :icon="['fass', 'star']"/>
                                     </p>
-                                    <p class="text-end">10 / €</p>
+                                    <p class="text-end">{{ myListingPreviews.price }} / € / €</p>
                                 </div>
                             </div>
                         </div>
