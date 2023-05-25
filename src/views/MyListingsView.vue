@@ -6,66 +6,39 @@
             </div>
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mb-5">
             <div class="col col-8">
                 <h4 class="text-start mb-3">Minu pakkumised:</h4>
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <div class="col px-3">
-                        <div class="card px-4">
-                            <img src="../assets/logoTelk.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title text-start mb-4">Aegviidu puhkekeskus</h5>
-                                <div class="d-flex justify-content-between">
-                                    <p class="card-text text-start">4.7 <font-awesome-icon :icon="['fass', 'star']"/>
-                                    </p>
-                                    <p class="text-end">{{ myListingPreviews.price }} / € / €</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col px-3">
-                        <div class="card px-4">
-                            <img src="../assets/logoTelk.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title text-start mb-4">Aegviidu puhkekeskus looduskauni järve ääres ja ilus mets on ka</h5>
-                                <div class="d-flex justify-content-between">
-                                    <p class="card-text text-start">4.7 <font-awesome-icon :icon="['fass', 'star']"/>
-                                    </p>
-                                    <p class="text-end">10/€</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col px-3">
-                        <div class="card px-4">
-                            <img src="../assets/logoTelk.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title text-start mb-4">Aegviidu puhkekeskus looduskauni järve ääres</h5>
-                                <div class="d-flex justify-content-between">
-                                    <p class="card-text text-start">4.7 <font-awesome-icon :icon="['fass', 'star']"/>
-                                    </p>
-                                    <p class="text-end">10 / €</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col px-3">
-                        <div class="card px-4">
-                            <img src="../assets/logoTelk.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title text-start mb-4">Aegviidu puhkekeskus looduskauni järve ääres</h5>
-                                <div class="d-flex justify-content-between">
-                                    <p class="card-text text-start">4.7 <font-awesome-icon :icon="['fass', 'star']"/>
-                                    </p>
-                                    <p class="text-end">10 / €</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--Listing card-->
+                <ListingPreviewCard :listings-preview="myListingsPreview" :show-buttons = "true"/>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col col-8">
+                <h4 class="text-start mb-3">Lisa pakkumine:</h4>
 
             </div>
         </div>
+
+
+        <AlertDanger :message="message"/>
+
+        <div class="row justify-content-center">
+            <div class="d-flex col col-6 mb-4">
+                <label for="listingName" class="form-label">Telkimisplatsi nimi</label>
+                <input v-model="newListing.listingName" type="text" id="listingName" class="form-control">
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center">
+            <div class="col col-4 mb-4">
+                <button @click="addNewListing" type="submit" class="btn btn-dark mb-3">Registreeri</button>
+            </div>
+        </div>
+
+
 
 
     </div>
@@ -73,52 +46,60 @@
 
 <script>
 import router from "@/router";
+import ListingPreviewCard from "@/components/ListingPreviewCard.vue";
+import AlertDanger from "@/components/alerts/AlertDanger.vue";
 
 export default {
     name: "MyListingsView",
+    components: {AlertDanger, ListingPreviewCard},
     data() {
         return {
             message: '',
-            userId: Number(sessionStorage.getItem('userId')),
-            myListingPreviews: [{
+            myListingsPreview: [
+                {
+                    listingId: 0,
+                    listingName: '',
+                    price: 0,
+                    imageData: '',
+                    numberOfScores: 0,
+                    averageScore: 0.0
+                }
+            ],
+            newListing: {
+                ownerUserId: Number(sessionStorage.getItem('userId')),
+                listingName: ''
+            },
+            errorResponse: {
+                message: '',
+                errorCode: 0,
+            },
+            addListingResponse: {
                 listingId: 0,
-                listingName: '',
-                price: 0,
-                imageData: '',
-                rating: 0,
-                numberOfRatings: 0
-            }],
-
-
+            },
         }
 
     },
     methods: {
-        getMyListingPreview() {
+        getMyListingsPreview() {
             this.$http.get("/my-listings", {
                     params: {
-                        userId: this.userId
+                        userId: Number(sessionStorage.getItem('userId'))
                     }
                 }
             ).then(response => {
-                alert(this.myListingPreviews.listingName)
-                this.myListingPreviews = response.data
+                this.myListingsPreview = response.data
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
         },
+        addNewListing() {
+            alert("Lisan uue listingu!")
+        }
     },
 
-    mounted() {
-        this.getMyListingPreview()
+    beforeMount() {
+        this.getMyListingsPreview()
     }
 }
 
 </script>
-
-<style scoped>
-.card-title {
-    height: 2.5rem;
-}
-
-</style>
