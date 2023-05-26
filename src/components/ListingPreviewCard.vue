@@ -2,8 +2,8 @@
     <div class="row row-cols-1 row-cols-md-2 g-4">
         <div v-for="listing in listingsPreview" :key="listing.listingId" class="col">
             <div class="card px-4">
-                <img @click="navigateToListing" src="../assets/logoTelk.png" class="card-img-top" alt="...">
-                <div @click="navigateToListing" class="card-body">
+                <img @click="navigateToListing(listing.listingId)" src="../assets/logoTelk.png" class="card-img-top" alt="...">
+                <div @click="navigateToListing(listing.listingId)" class="card-body">
                     <h5 class="card-title text-start mb-4">{{listing.listingName}}</h5>
 
                     <div class="d-flex justify-content-between">
@@ -28,6 +28,8 @@
     </div>
 </template>
 <script>
+import router from "@/router";
+
 export default {
     name: 'ListingPreviewCard',
     props: {
@@ -41,8 +43,9 @@ export default {
         deleteListing() {
             alert("Kustutan listingu")
         },
-        navigateToListing() {
-            alert("Mine listingusse")
+        navigateToListing(listingId) {
+            alert(listingId)
+            router.push({name: 'listingRoute', params: {id: listingId}})
         }
     }
 }

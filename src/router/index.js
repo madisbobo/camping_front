@@ -12,6 +12,7 @@ import ContactView from "@/views/ContactView.vue";
 import ListingsView from "@/views/ListingsView.vue";
 import editMyProfileView from "@/views/EditMyProfileView.vue";
 import AddListingView from "@/views/AddListingView.vue";
+import ListingView from "@/views/ListingView.vue";
 
 const routes = [
   {
@@ -58,6 +59,11 @@ const routes = [
     path: '/add-listing',
     name: 'addListingRoute',
     component: AddListingView
+  },
+  {
+    path: '/listing/:id',
+    name: 'listingRoute',
+    component: ListingView
   },
   {
     path: '/listings',
