@@ -6,42 +6,36 @@
             </div>
         </div>
 
-        <div class="row justify-content-center mb-5">
-            <div class="col col-8">
-                <h4 class="text-start mb-3">Minu pakkumised:</h4>
-                <!--Listing card-->
-                <ListingPreviewCard :listings-preview="myListingsPreview" :show-buttons = "true"/>
-            </div>
-        </div>
-
-        <div class="row justify-content-center mt-5">
-            <div class="col col-8">
-                <h4 class="text-start mb-3">Lisa pakkumine:</h4>
-
-            </div>
-        </div>
-
-
         <AlertDanger :message="message"/>
 
         <div class="row justify-content-center">
-            <div class="d-flex col col-6 mb-4">
-                <label for="listingName" class="form-label">Telkimisplatsi nimi</label>
-                <input v-model="newListing.listingName" type="text" id="listingName" class="form-control">
+            <div class="col col-8">
+                <h4 class="text-start mb-3">Minu pakkumised:</h4>
+            </div>
+            <div class="col col-8 mb-4">
+                <!--Listing card-->
+                <ListingPreviewCard :listings-preview="myListingsPreview" :show-buttons="true"/>
             </div>
         </div>
 
 
-        <div class="row justify-content-center">
-            <div class="col col-4 mb-4">
-                <button @click="addNewListing" type="submit" class="btn btn-dark mb-3">Registreeri</button>
+    <div class="row justify-content-center">
+        <div class="col col-8">
+            <h4 class="text-start mb-3">Lisa pakkumine:</h4>
+            <div class="row">
+                <div class="col col-8">
+                    <div class="input-group mb-3">
+                        <input v-model="newListing.listingName" type="text" class="form-control" placeholder="Telkimisplatsi nimi">
+                        <button @click="addNewListing" class="btn btn-dark" type="button" id="button-addon2">Lisa
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-
-
-
-
     </div>
+
+
+  </div>
 </template>
 
 <script>
@@ -92,9 +86,32 @@ export default {
                 router.push({name: 'errorRoute'})
             })
         },
+
         addNewListing() {
-            alert("Lisan uue listingu!")
-        }
+            this.message = ''
+            if (this.newListing.listingName === '') {
+                this.message = 'Täida tühi väli'
+            } else {
+                this.$http.post("/my-listings", this.newListing
+                ).then(response => {
+                    this.addListingResponse = response.data
+                    sessionStorage.setItem('listingId', this.addListingResponse.listingId)
+                    sessionStorage.setItem('listingName', this.newListing.listingName)
+                    router.push({name: 'addListingRoute'})
+                }).catch(error => {
+                    this.errorResponse = error.response.data
+                    if (this.errorResponse.errorCode === 333) {
+                        this.message = this.errorResponse.message;
+                    } else {
+                        router.push({name: 'errorRoute'})
+                    }
+                })
+            }
+
+
+
+        },
+
     },
 
     beforeMount() {
