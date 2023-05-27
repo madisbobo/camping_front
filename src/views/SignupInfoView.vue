@@ -31,8 +31,13 @@
                 </form>
 
             </div>
-            <div class="col col-4 mt-5 justify-content-center">
-                <img :src="userContact.imageData" class="img-thumbnail" alt="profile image"/>
+
+            <!--Add profile image-->
+            <div class="col col-4 mb-4">
+                <img v-if="userContact.imageData === ''"
+                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                     class="img-thumbnail" alt="profile image"/>
+                <img v-else :src="userContact.imageData" class="img-thumbnail" alt="profile image"/>
                 <ImageInput @event-emit-base64="setImage"/>
             </div>
         </div>
@@ -93,7 +98,6 @@ export default {
         signupAddContact() {
             this.$http.post("/signup-info", this.userContact
             ).then(response => {
-                const responseBody = response.data
                 router.push({name: 'homeRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})

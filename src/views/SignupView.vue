@@ -11,14 +11,14 @@
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
                 <label for="username" class="form-label">Kasutajanimi</label>
-                <input v-model="username" type="text" id="username" class="form-control">
+                <input v-model="newUser.username" type="text" id="username" class="form-control">
             </div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col col-4 mb-4">
                 <label for="password" class="form-label">Salasõna</label>
-                <input v-model="password" type="password" id="password" class="form-control">
+                <input v-model="newUser.password" type="password" id="password" class="form-control">
             </div>
         </div>
 
@@ -80,7 +80,7 @@ export default {
                 this.loginResponse = response.data
                 sessionStorage.setItem('userId', this.loginResponse.userId)
                 sessionStorage.setItem('roleName', this.loginResponse.roleName)
-                sessionStorage.setItem('username', this.username)
+                sessionStorage.setItem('username', this.newUser.username)
                 this.$emit('event-update-nav-menu')
                 router.push({name: 'signupInfoRoute'})
             }).catch(error => {

@@ -10,6 +10,9 @@ import MyProfileView from "@/views/MyProfileView.vue";
 import MyBookingsView from "@/views/MyBookingsView.vue";
 import BlogView from "@/views/BlogView.vue";
 import ContactView from "@/views/ContactView.vue";
+import AddListingView from "@/views/AddListingView.vue";
+import editMyProfileView from "@/views/EditMyProfileView.vue";
+import ListingView from "@/views/ListingView.vue";
 
 const routes = [
   {
@@ -28,16 +31,6 @@ const routes = [
     component: ErrorView
   },
   {
-    path: '/listings',
-    name: 'listingsRoute',
-    component: ListingsView
-  },
-  {
-    path: '/my-listings',
-    name: 'myListingsRoute',
-    component: MyListingsView
-  },
-  {
     path: '/signup',
     name: 'signupRoute',
     component: SignupView
@@ -53,9 +46,34 @@ const routes = [
     component: MyProfileView
   },
   {
+    path: '/edit-profile',
+    name: 'editMyProfileRoute',
+    component: editMyProfileView
+  },
+  {
     path: '/my-bookings',
     name: 'myBookingsRoute',
     component: MyBookingsView
+  },
+  {
+    path: '/my-listings',
+    name: 'myListingsRoute',
+    component: MyListingsView
+  },
+  {
+    path: '/add-listing',
+    name: 'addListingRoute',
+    component: AddListingView
+  },
+  {
+    path: '/listing/:id',
+    name: 'listingRoute',
+    component: ListingView
+  },
+  {
+    path: '/listings',
+    name: 'listingsRoute',
+    component: ListingsView
   },
   {
     path: '/blog',
