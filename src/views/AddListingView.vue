@@ -63,6 +63,10 @@
         </div>
     </div>
 
+    <CustomFooter></CustomFooter>
+
+
+
 
 
 
@@ -72,9 +76,12 @@
 <script>
 import ImageInput from "@/components/ImageInput.vue";
 import router from "@/router";
+import CustomNavigationBar from "@/App.vue";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "AddListingView",
+    components: {CustomFooter, CustomNavigationBar},
 
     data() {
         return {

@@ -52,16 +52,18 @@
 
 
     </div>
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
 import ImageInput from "@/components/ImageInput.vue";
 import router from "@/router";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "SignupInfoView",
-    components: {ImageInput, AlertDanger},
+    components: {CustomFooter, ImageInput, AlertDanger},
     data() {
         return {
             message: '',

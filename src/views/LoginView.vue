@@ -44,15 +44,18 @@
 
     </div>
 
+    <CustomFooter></CustomFooter>
+
 </template>
 
 <script>
 import router from "@/router";
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "LoginView.vue",
-    components: {AlertDanger},
+    components: {CustomFooter, AlertDanger},
 
     data() {
         return {

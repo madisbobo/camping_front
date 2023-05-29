@@ -38,15 +38,17 @@
 
 
     </div>
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
 import router from "@/router";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "SignupView",
-    components: {AlertDanger},
+    components: {CustomFooter, AlertDanger},
     data() {
         return {
             repeat_password: '',

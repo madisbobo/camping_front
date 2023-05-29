@@ -12,7 +12,12 @@
         <!-------- PILDID JA KIRJELDUS -------->
         <div class="row justify-content-center mb-5">
             <div class="col col-6 text-start">
-                <h3>Pildid</h3>
+                <div v-if="listingResponse.imagesData.length === 2">
+                    <font-awesome-icon :icon="['fass', 'image']" size="2xl" />
+                </div>
+                <div v-else>
+                    <img class="figure-img" :src="listingResponse.imagesData[0]" alt="">
+                </div>
             </div>
             <div class="col col-6 text-start">
                 <h3>Kirjeldus:</h3>
@@ -24,13 +29,20 @@
         <div class="row justify-content-center mb-5">
             <div class="col col-12 text-start">
                 <h3>Omadused</h3>
-                <ul>
-                    <li v-for="feature in listingResponse.features"> {{ feature.featureName }}:
-                        {{ feature.featureIsSelected }}
+                <ul class="list-unstyled ms-3">
+                    <li v-for="feature in listingResponse.features" :key="feature.featureName">
+                <span v-if="feature.featureIsSelected">
+                    <font-awesome-icon :icon="['fas', 'check']"/>
+                </span>
+                        <span v-else>
+                    <font-awesome-icon :icon="['fas', 'x']" />
+                </span>
+                        {{ feature.featureName }}
                     </li>
                 </ul>
             </div>
         </div>
+
 
         <!-------- ASUKOHT -------->
         <div class="row justify-content-center mb-5">
@@ -45,12 +57,19 @@
         <div class="row justify-content-center mb-5">
             <div class="col col-6 text-start">
                 <h3>Kontakt</h3>
-                <p><span class="fw-bold">Võõrustaja:</span> {{ listingResponse.contact.firstName }} {{ listingResponse.contact.lastName }}</p>
+                <p><span class="fw-bold">Võõrustaja:</span> {{ listingResponse.contact.firstName }}
+                    {{ listingResponse.contact.lastName }}</p>
                 <p><span class="fw-bold">E-post:</span> {{ listingResponse.contact.email }}</p>
                 <p><span class="fw-bold">Telefon:</span> {{ listingResponse.contact.phoneNo }}</p>
             </div>
             <div class="col col-6">
-                <img class="figure-img" src="../assets/logoTelk.png"/>
+                <div v-if="listingResponse.contact.imageData === 0">
+                    <font-awesome-icon :icon="['fass', 'image']" size="2xl" />
+                </div>
+                <div v-else>
+                    <img class="figure-img" :src="listingResponse.contact.imageData"/>
+                </div>
+
             </div>
         </div>
 
@@ -65,41 +84,103 @@
         <!-------- BRONEERI -------->
         <div class="row justify-content-center">
             <div class="col col-12 text-start">
-                <h3>Broneeri</h3>
-            </div>
-        </div>
+                <h3 class="mb-4">Broneeri</h3>
+                <AlertDanger :message="messageDate"/>
 
-        <div class="row justify-content-center mb-5">
-            <div class="col col-6 text-start">
-                <p>Saabumine / Lahkumine</p>
-                <p>kirjed</p>
-                <p>Hind inimese kohta / öö: {{ listingResponse.price }} €</p>
-                <p>Hind kokku: {{ listingResponse.price * 5 * 2}} €</p>
-            </div>
-            <div class="col col-6">
-                <div class="form-outline " style="width: 15rem;">
-                    <label class="form-label" for="typeNumber">Number input</label>
-                    <input value="1" type="number" id="typeNumber" class="form-control" />
+                <div class="row justify-content-center mb-5">
+                    <div class="col col-6 text-start">
+                        <div class="booking-form">
+                            <form>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Saabumine</span>
+                                            <input v-model="checkInDate" class="form-control" type="date"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Lahkumine</span>
+                                            <input v-model="checkOutDate" class="form-control" type="date"
+                                                   required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Telkide arv</span>
+                                            <select v-model="numberOfTents" class="form-control">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                            <span class="select-arrow"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Inimeste arv</span>
+                                            <select v-model="numberOfPeople" class="form-control">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </select>
+                                            <span class="select-arrow"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-btn text-center">
+                                    <button class="submit-btn">Broneeri</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col col-1">
+                    </div>
+                    <div class="col col-5">
+                        <div class="col col-6 text-start booking-summary">
+                            <p class="mb-3 fw-bold">Broneeringu kokkuvõte:</p>
+                            <p>Inimeste arv: {{ numberOfPeople }} </p>
+                            <p>Ööde arv: {{ calculateNumberOfNights() }} </p>
+                            <p>Hind inimese kohta / öö: {{ listingResponse.price }} €</p>
+                            <p>Hind kokku: {{ calculateTotalPrice() }} €</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
     </div>
+
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
 import router from "@/router";
 import ListingPreviewCard from "@/components/ListingPreviewCard.vue";
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
+import moment from 'moment';
+import CustomFooter from "@/components/CustomFooter.vue";
+
 
 export default {
     name: "ListingView",
-    components: {AlertDanger, ListingPreviewCard},
+    components: {CustomFooter, AlertDanger, ListingPreviewCard},
     data() {
         return {
             listingId: '',
             message: '',
+            messageDate: '',
             listingResponse: {
                 listingName: '',
                 listingDescription: '',
@@ -130,7 +211,13 @@ export default {
                     imageData: ''
                 },
                 price: 0
-            }
+            },
+            checkInDate: '',
+            checkOutDate: '',
+            numberOfTents: 0,
+            numberOfPeople: 0,
+            numberOfNights: 0,
+            totalPrice: 0
         }
     },
     methods: {
@@ -149,6 +236,28 @@ export default {
         },
         openMap() {
             alert("Open map")
+        },
+        calculateNumberOfNights() {
+            if (this.checkInDate && this.checkOutDate) {
+                // Convert the input date values to Moment.js objects
+                const checkInDate = moment(this.checkInDate);
+                const checkOutDate = moment(this.checkOutDate);
+                // Calculate the number of days between the two dates
+                this.numberOfNights = checkOutDate.diff(checkInDate, 'days');
+                if (this.numberOfNights < 0) {
+                    this.numberOfNights = 0
+                    this.messageDate = 'Alguskuupäev peab olema varajasem kui lahkumiskuupäev'
+                }
+                return this.numberOfNights
+            }
+            return 0;
+        },
+        calculateTotalPrice() {
+            if (this.checkInDate && this.checkOutDate && this.numberOfNights) {
+                this.totalPrice = this.listingResponse.price * this.numberOfNights * this.numberOfPeople;
+                return this.totalPrice
+            }
+            return 0;
         }
     },
     mounted() {
@@ -158,5 +267,120 @@ export default {
 </script>
 
 <style scoped>
+
+.figure-img {
+    height: 150px;
+    border-radius: 100%;
+}
+
+.booking-summary {
+    font-size: 20px;
+}
+
+
+.section {
+    position: relative;
+    height: 100vh;
+}
+
+#booking::before {
+    content: '';
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.booking-form {
+    background-color: #fff;
+    padding: 50px 20px;
+    -webkit-box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.booking-form .form-group {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.booking-form .form-control {
+    background-color: #ebecee;
+    border-radius: 4px;
+    border: none;
+    height: 40px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #3e485c;
+    font-size: 14px;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+    color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+    color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form .form-control::placeholder {
+    color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form input[type="date"].form-control:invalid {
+    color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.booking-form select.form-control + .select-arrow {
+    position: absolute;
+    right: 0px;
+    bottom: 4px;
+    width: 32px;
+    line-height: 32px;
+    height: 32px;
+    text-align: center;
+    pointer-events: none;
+    color: rgba(62, 72, 92, 0.3);
+    font-size: 14px;
+}
+
+.booking-form select.form-control + .select-arrow:after {
+    content: '\279C';
+    display: block;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.booking-form .form-label {
+    display: inline-block;
+    color: #3e485c;
+    font-weight: 700;
+    margin-bottom: 6px;
+    margin-left: 7px;
+}
+
+.booking-form .submit-btn {
+    display: inline-block;
+    color: #fff;
+    background-color: black;
+    font-weight: 700;
+    padding: 14px 30px;
+    border-radius: 4px;
+    border: none;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+}
+
+.booking-form .submit-btn:hover,
+.booking-form .submit-btn:focus {
+    opacity: 0.9;
+}
+
 
 </style>

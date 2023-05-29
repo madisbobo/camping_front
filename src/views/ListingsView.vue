@@ -19,18 +19,19 @@
 
             </div>
         </div>
-
-
     </div>
+
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
 import router from "@/router";
 import ListingPreviewCard from "@/components/ListingPreviewCard.vue";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "ListingsView",
-    components: {ListingPreviewCard},
+    components: {CustomFooter, ListingPreviewCard},
     data() {
         return {
             message: '',

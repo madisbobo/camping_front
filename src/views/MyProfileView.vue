@@ -48,15 +48,17 @@
 
     </div>
 
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
 import router from "@/router";
 import Modal from "@/components/modals/Modal.vue";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "MyProfileView",
-    components: {Modal},
+    components: {CustomFooter, Modal},
     data() {
         return {
             message: '',
