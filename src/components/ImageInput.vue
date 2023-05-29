@@ -26,10 +26,6 @@ export default {
             }
             reader.readAsDataURL(fileObject);
         },
-
-        // setPictureDataBase64(pictureDataBase64) {
-        //     this.pictureDataBase64 = pictureDataBase64
-        // },
     }
 }
 </script>

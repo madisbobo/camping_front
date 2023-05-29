@@ -17,12 +17,14 @@
 
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Kirjeldus:</label>
-                    <textarea v-model="listingDescription" id="listingDescription" class="form-control form-control-lg"></textarea>
+                    <textarea v-model="listingDescription" id="listingDescription"
+                              class="form-control form-control-lg"></textarea>
                 </div>
                 <div class="text-start">
                     <label for="dropdownMenuButton" class="form-label">Vali asukoht:</label>
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                             Maakond:
                         </button>
                         <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuButton">
@@ -63,18 +65,19 @@
         </div>
     </div>
 
-
-
+    <CustomFooter></CustomFooter>
 
 
 </template>
 
 <script>
-import ImageInput from "@/components/ImageInput.vue";
 import router from "@/router";
+import CustomNavigationBar from "@/App.vue";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "AddListingView",
+    components: {CustomFooter, CustomNavigationBar},
 
     data() {
         return {
@@ -103,7 +106,7 @@ export default {
         },
 
         addListingInfo() {
-            this.$http.post("/signup-info", this.listing
+            this.$http.post("/signup-info", this.listingId
             ).then(response => {
                 router.push({name: 'homeRoute'})
             }).catch(error => {

@@ -1,5 +1,5 @@
 <template>
-    <div @keydown.enter="signup" class="container">
+    <div @keydown.enter="signup" class="container mt-4">
         <AlertDanger :message="message"/>
 
         <div class="row justify-content-center">
@@ -36,15 +36,17 @@
         </div>
 
     </div>
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
 import router from "@/router";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "SignupView",
-    components: {AlertDanger},
+    components: {AlertDanger, CustomFooter},
     data() {
         return {
             repeat_password: '',
@@ -95,7 +97,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

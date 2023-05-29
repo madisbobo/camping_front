@@ -13,11 +13,15 @@
         </div>
 
     </div>
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
+import CustomFooter from "@/components/CustomFooter.vue";
+
 export default {
-    name: "ContactView"
+    name: "ContactView",
+    components: {CustomFooter}
 }
 </script>
 

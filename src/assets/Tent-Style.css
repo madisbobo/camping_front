@@ -1,0 +1,46 @@
+:root {
+    --text-dark: hsl(315, 8%, 95%);
+    --text-light: hsl(258, 15%, 16%);
+    --bkg-dark: hsl(234, 37%, 19%);
+    --bkg-light: hsl(28, 37%, 96%);
+}
+@media(prefers-color-scheme: dark){
+    :root {
+        --text: var(--text-dark);
+        --bkg: var(--bkg-dark);
+    }
+}
+@media(prefers-color-scheme: light){
+    :root {
+        --text: var(--text-light);
+        --bkg: var(--bkg-light);
+    }
+}
+[color-scheme="light"] {
+
+}
+[color-scheme="dark"] {
+
+}
+.text {
+    color: var(--text);
+}
+.background {
+    color: var(--bkg);
+}
+
+.theme {
+    background-color: saddlebrown;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid seashell;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+}
+
+.theme:is(:hover, :focus) {
+
+}
+

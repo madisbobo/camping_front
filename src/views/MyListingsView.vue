@@ -35,17 +35,19 @@
     </div>
 
 
-    </div>
+  </div>
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
 import router from "@/router";
 import ListingPreviewCard from "@/components/ListingPreviewCard.vue";
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "MyListingsView",
-    components: {AlertDanger, ListingPreviewCard},
+    components: {CustomFooter, AlertDanger, ListingPreviewCard},
     data() {
         return {
             message: '',

@@ -46,21 +46,26 @@
 
 
     </div>
+
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
 import ImageInput from "@/components/ImageInput.vue";
 import router from "@/router";
+import Modal from "@/components/modals/Modal.vue";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "MyProfileView",
-    components: {ImageInput, AlertDanger},
+    components: {CustomFooter, Modal, ImageInput, AlertDanger},
     data() {
         return {
             message: '',
             userId: Number(sessionStorage.getItem('userId')),
             userContact: {
+                userId: null,
                 firstName: '-',
                 lastName: '-',
                 email: '-',

@@ -3,53 +3,57 @@
         <AlertDanger :message="message"/>
 
         <div class="row justify-content-center">
-            <div class="col col-4 mt-5">
+            <div class="col col-4 mb-4">
                 <h2>Sisselogimine</h2>
             </div>
         </div>
 
         <div class="row justify-content-center">
-            <div class="col col-4 mt-4">
+            <div class="col col-4 mb-4">
                 <label for="username" class="form-label">Kasutajanimi</label>
                 <input v-model="username" type="text" id="username" class="form-control">
             </div>
         </div>
 
         <div class="row justify-content-center">
-            <div class="col col-4 mt-4">
+            <div class="col col-4 mb-4">
                 <label for="password" class="form-label">Salasõna</label>
-                <input v-model="password" type="text" id="password" class="form-control">
+                <input v-model="password" type="password" id="password" class="form-control">
             </div>
         </div>
 
         <div class="row justify-content-center">
-            <div class="col col-4 mt-4">
+            <div class="col col-4 mb-4">
                 <button @click="login" type="submit" class="btn btn-dark mb-3">Logi Sisse</button>
             </div>
         </div>
 
         <div class="row justify-content-center">
-            <div class="col col-4 mt-4">
+            <div class="col col-4 mb-4">
                 <h5>Sul ei ole veel kasutajat?</h5>
             </div>
         </div>
 
         <div class="row justify-content-center">
-            <div class="col col-4 mt-4">
-                <router-link to="/signup" type="button" class="btn btn-dark mb-3">Registreeri</router-link>
+            <div class="col col-4 mb-4">
+                <router-link to="/signup" class="btn btn-outline-dark mb-3">Registreeri</router-link>
             </div>
         </div>
 
     </div>
+
+    <CustomFooter></CustomFooter>
+
 </template>
 
 <script>
 import router from "@/router";
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
+import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "LoginView.vue",
-    components: {AlertDanger},
+    components: {CustomFooter, AlertDanger},
 
     data() {
         return {
@@ -89,16 +93,15 @@ export default {
                 sessionStorage.setItem('username', this.username)
                 this.$emit('event-update-nav-menu')
                 router.push({name: 'homeRoute'})
-
             }).catch(error => {
                 this.errorResponse = error.response.data
                 if (this.errorResponse.errorCode === 111) {
-                    this.message = this.errorResponse.message;
+                    this.message = this.errorResponse.message
                 } else {
                     router.push({name: 'errorRoute'})
                 }
             })
         }
-    },
+    }
 }
 </script>
