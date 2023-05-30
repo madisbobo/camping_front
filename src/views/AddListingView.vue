@@ -102,7 +102,7 @@
     <div class="row justify-content-center mb-4 mt-4">
         <div class="col col-4">
             <button @click="addListingInfo" type="submit" class="btn btn-dark me-3">Lisa</button>
-            <button @click="abortAddListing" type="button" class="btn btn-dark ms-3">Loobu</button>
+            <button @click="router().push({name: 'myListingsRoute'})" type="button" class="btn btn-dark ms-3">Loobu</button>
         </div>
     </div>
 
@@ -125,6 +125,7 @@ export default {
         return {
             message: '',
             countyNameFront: '',
+            listingInfoAdded: false,
             features:
                 [
                     {
@@ -169,6 +170,9 @@ export default {
 
 
     methods: {
+        router() {
+            return router
+        },
 
         abortAddListing() {
             this.$http.delete("/add-listing", {
@@ -208,9 +212,9 @@ export default {
 
         addListingInfo() {
             this.addFullListing.features = this.features
-            alert(this.addFullListing.features[1].featureId)
             this.$http.put("/add-listing", this.addFullListing
             ).then(response => {
+                this.listingInfoAdded = true
                 router.push({name: 'myListingsRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
@@ -226,7 +230,11 @@ export default {
         this.getFeatures()
         this.getCounties()
     },
-
+    beforeRouteLeave() {
+        if (!this.listingInfoAdded) {
+            this.abortAddListing();
+        }
+    },
 }
 </script>
 

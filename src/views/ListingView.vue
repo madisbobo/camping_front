@@ -16,7 +16,7 @@
                     <font-awesome-icon :icon="['fass', 'image']" size="2xl" />
                 </div>
                 <div v-else>
-                    <img class="figure-img" :src="listingResponse.imagesData[0]" alt="">
+                    <img class="figure-img listing-img" :src="listingResponse.imagesData[0]" alt="">
                 </div>
             </div>
             <div class="col col-6 text-start">
@@ -43,7 +43,6 @@
             </div>
         </div>
 
-
         <!-------- ASUKOHT -------->
         <div class="row justify-content-center mb-5">
             <div class="col col-12 text-start">
@@ -67,7 +66,7 @@
                     <font-awesome-icon :icon="['fass', 'image']" size="2xl" />
                 </div>
                 <div v-else>
-                    <img class="figure-img" :src="listingResponse.contact.imageData"/>
+                    <img class="figure-img profile-img" :src="listingResponse.contact.imageData"/>
                 </div>
 
             </div>
@@ -268,9 +267,14 @@ export default {
 
 <style scoped>
 
-.figure-img {
+.profile-img {
     height: 150px;
     border-radius: 100%;
+}
+
+.listing-img {
+    width: 600px;
+    border-radius: 1%;
 }
 
 .booking-summary {
