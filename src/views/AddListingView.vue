@@ -168,7 +168,7 @@ export default {
         abortAddListing() {
             this.$http.delete("/add-listing", {
                     params: {
-                        listingId: this.listingId
+                        listingId: Number(sessionStorage.getItem('listingId'))
                     }
                 }
             ).then(response => {
