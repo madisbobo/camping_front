@@ -32,12 +32,12 @@
                 <div class="mb-3 text-start">
                     <label for="dropdownMenuButton" class="form-label">Vali maakond:</label>
                     <div class="dropdown">
-                        <button class="dropdown-toggle" type="button" id="dropdownMenuButton"
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                            Maakond:
+                            {{ addFullListing.locationCountyId === 0 ? 'Kõik maakonnad' : countyNameFront }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuButton">
-                            <li v-for="county in counties"><a class="dropdown-item" href="#">{{ county.countyName }}</a></li>
+                            <li @click ="addFullListing.locationCountyId = county.countyId; countyNameFront = county.countyName" v-for="county in counties"><a class="dropdown-item" href="#">{{ county.countyName }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -60,7 +60,11 @@
             <div class="col col-4 mb-4">
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Lisa pildid:</label><br>
-                    <button @click="addListingInfo" type="submit" class="btn btn-dark me-3">Lisa pildid</button>
+                    <!--<button @click="addListingInfo" type="submit" class="btn btn-dark me-3">Lisa pildid</button>-->
+                    <img v-if="addFullListing.imagesData[0] === ''"  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="img-thumbnail mb-3" alt="profile image"/>
+                    <img v-else :src="addFullListing.imagesData[0]" class="img-thumbnail mb-3" alt="image"/>
+                    <br>
+                    <ImageInput @event-emit-base64="setImage"/>
                 </div>
             </div>
         </div>
@@ -120,6 +124,7 @@ export default {
     data() {
         return {
             message: '',
+            countyNameFront: '',
             features:
                 [
                     {
@@ -200,23 +205,30 @@ export default {
                 })
         },
 
+
         addListingInfo() {
-            this.$http.post("/signup-info", this.listing
+            this.$http.put("/add-listing", this.addFullListing
             ).then(response => {
                 router.push({name: 'homeRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
-        }
+        },
+        setImage(selectedImage) {
+            this.addFullListing.imagesData[0] = selectedImage
+        },
 
     },
     mounted() {
         this.getFeatures()
         this.getCounties()
-    }
+    },
+
 }
 </script>
 
 <style scoped>
-
+.img-thumbnail{
+    height: 150px;
+}
 </style>
