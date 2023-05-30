@@ -5,7 +5,8 @@
         </template>
         <template #body>
             <img :src="addFullListing.imagesData" class="img-thumbnail" alt="add listing images"/>
-            <ImageInput multiple @event-emit-base64="setImage"/>
+            <ImageInput @event-emit-base64="setImage"/>
+            <br>
             Kas soovid siia pilte lisada?
         </template>
         <template #footer>

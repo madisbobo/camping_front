@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-4">
+    <div @keydown.enter="addNewListing" class="container mt-4">
         <div class="row justify-content-center">
             <div class="col col-4 mb-4 ">
                 <h1>Minu Pakkumised</h1>

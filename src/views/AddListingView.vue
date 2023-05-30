@@ -60,11 +60,11 @@
             <div class="col col-4 mb-4">
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Lisa pildid:</label><br>
-                    <button @click="handleAddImage" type="button" class="btn btn-dark me-3">Lisa pildid</button>
                     <img v-if="addFullListing.imagesData[0] === ''"  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="img-thumbnail mb-3" alt="profile image"/>
                     <img v-else :src="addFullListing.imagesData[0]" class="img-thumbnail mb-3" alt="image"/>
                     <br>
-                    <ImageInput @event-emit-base64="setImage"/>
+                    <button @click="handleAddImage" type="button" class="btn btn-dark me-3">Lisa pildid</button>
+                    <!--                    <ImageInput @event-emit-base64="setImage"/>-->
                 </div>
             </div>
         </div>
@@ -102,7 +102,7 @@
     <div class="row justify-content-center mb-4 mt-4">
         <div class="col col-4">
             <button @click="addListingInfo" type="submit" class="btn btn-dark me-3">Lisa</button>
-            <button @click="abortAddListing" type="button" class="btn btn-dark ms-3">Loobu</button>
+            <button @click="router().push({name: 'myListingsRoute'})" type="button" class="btn btn-dark ms-3">Loobu</button>
         </div>
     </div>
     <add-image-modal ref="addImageModalRef"/>
@@ -125,6 +125,7 @@ export default {
     data() {
         return {
             message: '',
+            listingInfoAdded: false,
             countyNameFront: '',
             features:
                 [
@@ -164,6 +165,9 @@ export default {
         }
     },
     methods: {
+        router() {
+            return router
+        },
         handleAddImage() {
             this.$refs.addImageModalRef.$refs.modalRef.openModal()
         },
@@ -176,7 +180,6 @@ export default {
             ).then(response => {
                 sessionStorage.removeItem('locationId')
                 sessionStorage.removeItem('locationName')
-                router.push({name: 'homeRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
@@ -202,17 +205,19 @@ export default {
                 })
         },
 
-        setImage(selectedImage) {
-            this.addFullListing.imagesData[0] = selectedImage
-        },
+        // setImage(selectedImage) {
+        //     this.addFullListing.imagesData[0] = selectedImage
+        // },
 
         addListingInfo() {
             this.addFullListing.features = this.features
             alert(this.addFullListing.features[1].featureId)
             this.$http.put("/add-listing", this.addFullListing
             ).then(response => {
+                this.listingInfoAdded = true
                 router.push({name: 'myListingsRoute'})
             }).catch(error => {
+                this.listingInfoAdded = true
                 router.push({name: 'errorRoute'})
             })
         },
@@ -222,10 +227,16 @@ export default {
         this.getFeatures()
         this.getCounties()
     },
-
+    beforeRouteLeave() {
+        if (!this.listingInfoAdded) {
+            this.abortAddListing();
+        }
+    },
 }
 </script>
 
 <style scoped>
-
+.img-thumbnail {
+    height: 150px;
+}
 </style>

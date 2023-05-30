@@ -44,7 +44,8 @@
         <div class="row justify-content-center mb-4 mt-4">
             <div class="col col-4">
                 <button @click="signupAddContact" type="submit" class="btn btn-dark me-3">Registreeri</button>
-                <button @click="abortSignup" type="button" class="btn btn-dark ms-3">Loobu</button>
+                <button @click="router().push({name: 'signupRoute'})
+" type="button" class="btn btn-dark ms-3">Loobu</button>
             </div>
 
         </div>
@@ -65,6 +66,7 @@ export default {
     components: {CustomFooter, ImageInput, AlertDanger},
     data() {
         return {
+            contactAdded: false,
             message: '',
             userContact: {
                 userId: Number(sessionStorage.getItem('userId')),
@@ -77,6 +79,9 @@ export default {
         }
     },
     methods: {
+        router() {
+            return router
+        },
         setImage(selectedImage) {
             this.userContact.imageData = selectedImage
         },
@@ -90,7 +95,6 @@ export default {
             ).then(response => {
                 sessionStorage.clear()
                 this.$emit('event-update-nav-menu')
-                router.push({name: 'homeRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
@@ -98,12 +102,18 @@ export default {
         signupAddContact() {
             this.$http.post("/signup-info", this.userContact
             ).then(response => {
+                this.contactAdded = true
                 router.push({name: 'homeRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
         },
 
-    }
+    },
+    beforeRouteLeave() {
+        if (!this.contactAdded) {
+            this.abortSignup();
+        }
+    },
 }
 </script>
