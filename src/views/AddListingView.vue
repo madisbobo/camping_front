@@ -86,7 +86,7 @@
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Omadused:</label>
                     <div v-for="feature in features" class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <input v-model="feature.featureIsSelected" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             {{ feature.featureName }}
                         </label>
@@ -207,13 +207,16 @@ export default {
 
 
         addListingInfo() {
+            this.addFullListing.features = this.features
+            alert(this.addFullListing.features[1].featureId)
             this.$http.put("/add-listing", this.addFullListing
             ).then(response => {
-                router.push({name: 'homeRoute'})
+                router.push({name: 'myListingsRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
         },
+
         setImage(selectedImage) {
             this.addFullListing.imagesData[0] = selectedImage
         },
