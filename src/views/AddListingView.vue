@@ -37,9 +37,7 @@
                             Maakond:
                         </button>
                         <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="#">Option 1</a></li>
-                            <li><a class="dropdown-item" href="#">Option 2</a></li>
-                            <li><a class="dropdown-item" href="#">Option 3</a></li>
+                            <li v-for="county in counties"><a class="dropdown-item" href="#">{{ county.countyName }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -126,7 +124,15 @@ export default {
                 [
                     {
                         id: 0,
-                        name: ''
+                        name: '',
+                        featureIsSelected: false
+                    }
+                ],
+            counties:
+                [
+                    {
+                        countyId: 0,
+                        countyName: ''
                     }
                 ],
             addFullListing: {
@@ -175,9 +181,19 @@ export default {
         },
 
         getFeatures() {
-            this.$http.get("/add-listing")
+            this.$http.get("/add-listing-features")
                 .then(response => {
                     this.features = response.data
+                })
+                .catch(error => {
+                    router.push({name: 'errorRoute'})
+                })
+        },
+
+        getCounties() {
+            this.$http.get("/add-listing-counties")
+                .then(response => {
+                    this.counties = response.data
                 })
                 .catch(error => {
                     router.push({name: 'errorRoute'})
@@ -196,6 +212,7 @@ export default {
     },
     mounted() {
         this.getFeatures()
+        this.getCounties()
     }
 }
 </script>
