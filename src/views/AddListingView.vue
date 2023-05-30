@@ -84,7 +84,7 @@
                     <div v-for="feature in features" class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
-                            {{ feature.name }}
+                            {{ feature.featureName }}
                         </label>
                     </div>
                 </div>
@@ -124,7 +124,7 @@ export default {
                 [
                     {
                         id: 0,
-                        name: '',
+                        featureName: '',
                         featureIsSelected: false
                     }
                 ],
