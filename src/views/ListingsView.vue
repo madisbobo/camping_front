@@ -20,8 +20,8 @@
             </div>
         </div>
     </div>
-
     <CustomFooter></CustomFooter>
+
 </template>
 
 <script>

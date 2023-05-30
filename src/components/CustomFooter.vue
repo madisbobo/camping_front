@@ -1,5 +1,5 @@
 <template>
-    <footer class="fixed-bottom text-center text-white mt-5" style="background-color: #f1f1f1;">
+    <footer class="text-center text-white mt-5" style="background-color: #f1f1f1;">
         <!-- Grid container -->
         <div class="container pt-4">
 
@@ -95,3 +95,9 @@ export default {
     name: 'CustomFooter'
 }
 </script>
+<style>
+footer {
+    position: relative;
+    bottom: 0;
+}
+</style>

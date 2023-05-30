@@ -5,24 +5,35 @@
             <h2>Lisa telkimisplatsi andmed:</h2>
         </div>
     </div>
-
-    <div class="row justify-content-center">
-        <div class="col col-4 mb-4">
-
-            <form>
+    <form>
+        <!-- Name and description -->
+        <div class="row justify-content-center mb-4">
+            <div class="col col-4">
                 <div class="mb-3 text-start">
                     <label for="listingName" class="form-label ">Platsi nimi: </label>
-                    <input v-model="listingName" type="text" id="listingName" class="form-control">
+                    <input v-model="addFullListing.listingName" type="text" id="listingName" class="form-control">
                 </div>
 
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Kirjeldus:</label>
-                    <textarea v-model="listingDescription" id="listingDescription" class="form-control form-control-lg"></textarea>
+                    <textarea v-model="addFullListing.description" id="listingDescription"
+                              class="form-control form-control-lg"></textarea>
                 </div>
-                <div class="text-start">
-                    <label for="dropdownMenuButton" class="form-label">Vali asukoht:</label>
+            </div>
+        </div>
+
+        <!-- Location info -->
+        <div class="row justify-content-center mb-4 mt-4">
+            <div class="col col-2 mb-7">
+                <div class="mb-3 text-start">
+                    <label for="address" class="form-label">Aadress:</label>
+                    <input v-model="addFullListing.locationAddress" type="text" id="address" class="form-control">
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="dropdownMenuButton" class="form-label">Vali maakond:</label>
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                             Maakond:
                         </button>
                         <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuButton">
@@ -32,28 +43,58 @@
                         </ul>
                     </div>
                 </div>
-            </form>
+            </div>
+            <div class="col col-2 mb-7">
+                <div class="mb-3 text-start">
+                    <label for="locationLongitude" class="form-label">Longitude:</label>
+                    <input v-model="addFullListing.locationLongitude" type="text" id="locationLongitude" class="form-control">
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="locationLatitude" class="form-label">Latitude:</label>
+                    <input v-model="addFullListing.locationLatitude" type="text" id="locationLatitude" class="form-control">
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row justify-content-center mb-4 mt-4">
-        <div class="col col-2 mb-4">
-            <div class="mb-3 text-start">
-                <label for="address" class="form-label">Aadress:</label>
-                <input v-model="address" type="text" id="address" class="form-control">
+
+        <!-- Lisa pildid -->
+        <div class="row justify-content-center mt-4">
+            <div class="col col-4 mb-4">
+                <div class="mb-3 text-start">
+                    <label for="listingDescription" class="form-label">Lisa pildid:</label><br>
+                    <button @click="addListingInfo" type="submit" class="btn btn-dark me-3">Lisa pildid</button>
+                </div>
             </div>
         </div>
-        <div class="col col-2 mb-7">
-            <div class="mb-3 text-start">
-                <label for="locationLongitude" class="form-label">Longitude:</label>
-                <input v-model="locationLongitude" type="text" id="locationLongitude" class="form-control">
-            </div>
-            <div class="mb-3 text-start">
-                <label for="locationLatitude" class="form-label">Latitude:</label>
-                <input v-model="locationLatitude" type="text" id="locationLatitude" class="form-control">
+
+        <!-- Additional information -->
+        <div class="row justify-content-center mt-4">
+            <div class="col col-4 mb-4">
+                <div class="mb-3 text-start">
+                    <label for="listingDescription" class="form-label">Lisainfo:</label>
+                    <textarea v-model="addFullListing.additionalInfo" id="listingDescription"
+                              class="form-control form-control-lg"></textarea>
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- Omadused -->
+        <div class="row justify-content-center mt-4">
+            <div class="col col-4 mb-4">
+                <div class="mb-3 text-start">
+                    <label for="listingDescription" class="form-label">Omadused:</label>
+                    <div v-for="feature in features" class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{ feature.name }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
 
 
     <div class="row justify-content-center mb-4 mt-4">
@@ -66,11 +107,6 @@
     <CustomFooter></CustomFooter>
 
 
-
-
-
-
-
 </template>
 
 <script>
@@ -81,14 +117,43 @@ import CustomFooter from "@/components/CustomFooter.vue";
 
 export default {
     name: "AddListingView",
-    components: {CustomFooter, CustomNavigationBar},
+    components: {ImageInput, CustomFooter, CustomNavigationBar},
 
     data() {
         return {
             message: '',
-            listingId: Number(sessionStorage.getItem('listingId')),
-
+            features:
+                [
+                    {
+                        id: 0,
+                        name: ''
+                    }
+                ],
+            addFullListing: {
+                ownerUserId: sessionStorage.getItem('userId'),
+                listingId: Number(sessionStorage.getItem('listingId')),
+                listingName: sessionStorage.getItem('listingName'),
+                description: '',
+                additionalInfo: '',
+                price: 0,
+                locationCountyId: 0,
+                locationAddress: '',
+                locationLongitude: 0,
+                locationLatitude: 0,
+                features: [
+                    {
+                        featureId: 0,
+                        featureName: '',
+                        featureIsSelected: true
+                    }
+                ],
+                imagesData: [
+                    ''
+                ]
+            }
         }
+
+
     },
 
 
@@ -109,6 +174,16 @@ export default {
             })
         },
 
+        getFeatures() {
+            this.$http.get("/add-listing")
+                .then(response => {
+                    this.features = response.data
+                })
+                .catch(error => {
+                    router.push({name: 'errorRoute'})
+                })
+        },
+
         addListingInfo() {
             this.$http.post("/signup-info", this.listing
             ).then(response => {
@@ -118,6 +193,9 @@ export default {
             })
         }
 
+    },
+    mounted() {
+        this.getFeatures()
     }
 }
 </script>
