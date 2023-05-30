@@ -1,8 +1,9 @@
 <template>
-    <!--Navigation bar-->
+  <!--Navigation bar-->
     <CustomNavigationBar :handle-logout="handleLogout" :user-id="userId" :username="username"/>
 
     <logout-modal ref="logoutModalRef" @event-update-nav-menu="updateNavMenu"/>
+    <add-image-modal ref="addImageModalRef"/>
     <router-view @event-update-nav-menu="updateNavMenu"/>
 
 </template>
@@ -19,7 +20,7 @@ export default {
         return {
             userId: sessionStorage.getItem('userId'),
             roleName: sessionStorage.getItem('roleName'),
-            username: sessionStorage.getItem('username')
+            username: sessionStorage.getItem('username'),
         }
     },
     methods: {

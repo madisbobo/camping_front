@@ -1,15 +1,15 @@
 <template>
-  <modal ref="modalRef" close-button-name="Ei">
-      <template #header>
-          Väljalogimine
-      </template>
-      <template #body>
-          Kas soovid välja logida?
-      </template>
-      <template #footer>
-          <button @click="executeLogout" type="button" class="btn btn-primary">Jah</button>
-      </template>
-  </modal>
+    <modal ref="modalRef" close-button-name="Ei">
+        <template #header>
+            Väljalogimine
+        </template>
+        <template #body>
+            Kas soovid välja logida?
+        </template>
+        <template #footer>
+            <button @click="executeLogout" type="button" class="btn btn-primary">Jah</button>
+        </template>
+    </modal>
 
 </template>
 
@@ -22,7 +22,7 @@ export default {
     components: {Modal},
     methods: {
         executeLogout() {
-            sessionStorage.clear()
+            sessionStorage.clear();
             this.$refs.modalRef.closeModal()
             this.$emit('event-update-nav-menu')
             router.push({name: 'homeRoute'})

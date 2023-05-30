@@ -36,7 +36,6 @@
             <div class="col col-4 mb-4">
                 <img :src="userContact.imageData" class="img-thumbnail" alt="profile image"/>
                 <ImageInput @event-emit-base64="setImage"/>
-                <div/>
             </div>
         </div>
 
@@ -49,7 +48,7 @@
 
         </div>
     </div>
-    <CustomFooter></CustomFooter>
+<!--    <CustomFooter></CustomFooter>-->
 </template>
 
 <script>
@@ -87,7 +86,7 @@ export default {
             this.userContact.userId = Number(sessionStorage.getItem('userId'))
             this.$http.put("/edit-profile", this.userContact
             ).then(response => {
-                router.push({name: 'myProfileRoute'}) /*TODO: pane siia alert ka*/
+                router.push({name: 'myProfileRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })

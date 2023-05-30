@@ -5,57 +5,98 @@
             <h2>Lisa telkimisplatsi andmed:</h2>
         </div>
     </div>
-
-    <div class="row justify-content-center">
-        <div class="col col-4 mb-4">
-
-            <form>
+    <form>
+        <!-- Name and description -->
+        <div class="row justify-content-center mb-4">
+            <div class="col col-4">
                 <div class="mb-3 text-start">
                     <label for="listingName" class="form-label ">Platsi nimi: </label>
-                    <input v-model="listingName" type="text" id="listingName" class="form-control">
+                    <input v-model="addFullListing.listingName" type="text" id="listingName" class="form-control">
                 </div>
 
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Kirjeldus:</label>
-                    <textarea v-model="listingDescription" id="listingDescription"
+                    <textarea v-model="addFullListing.description" id="listingDescription"
                               class="form-control form-control-lg"></textarea>
                 </div>
-                <div class="text-start">
-                    <label for="dropdownMenuButton" class="form-label">Vali asukoht:</label>
+            </div>
+        </div>
+
+        <!-- Location info -->
+        <div class="row justify-content-center mb-4 mt-4">
+            <div class="col col-2 mb-7">
+                <div class="mb-3 text-start">
+                    <label for="address" class="form-label">Aadress:</label>
+                    <input v-model="addFullListing.locationAddress" type="text" id="address" class="form-control">
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="dropdownMenuButton" class="form-label">Vali maakond:</label>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                            Maakond:
+                            {{ addFullListing.locationCountyId === 0 ? 'Kõik maakonnad' : countyNameFront }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="#">Option 1</a></li>
-                            <li><a class="dropdown-item" href="#">Option 2</a></li>
-                            <li><a class="dropdown-item" href="#">Option 3</a></li>
+                            <li @click ="addFullListing.locationCountyId = county.countyId; countyNameFront = county.countyName" v-for="county in counties"><a class="dropdown-item" href="#">{{ county.countyName }}</a></li>
                         </ul>
                     </div>
                 </div>
-            </form>
+            </div>
+            <div class="col col-2 mb-7">
+                <div class="mb-3 text-start">
+                    <label for="locationLongitude" class="form-label">Longitude:</label>
+                    <input v-model="addFullListing.locationLongitude" type="text" id="locationLongitude" class="form-control">
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="locationLatitude" class="form-label">Latitude:</label>
+                    <input v-model="addFullListing.locationLatitude" type="text" id="locationLatitude" class="form-control">
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row justify-content-center mb-4 mt-4">
-        <div class="col col-2 mb-4">
-            <div class="mb-3 text-start">
-                <label for="address" class="form-label">Aadress:</label>
-                <input v-model="address" type="text" id="address" class="form-control">
+
+        <!-- Lisa pildid -->
+        <div class="row justify-content-center mt-4">
+            <div class="col col-4 mb-4">
+                <div class="mb-3 text-start">
+                    <label for="listingDescription" class="form-label">Lisa pildid:</label><br>
+                    <button @click="handleAddImage" type="button" class="btn btn-dark me-3">Lisa pildid</button>
+                    <img v-if="addFullListing.imagesData[0] === ''"  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="img-thumbnail mb-3" alt="profile image"/>
+                    <img v-else :src="addFullListing.imagesData[0]" class="img-thumbnail mb-3" alt="image"/>
+                    <br>
+                    <ImageInput @event-emit-base64="setImage"/>
+                </div>
             </div>
         </div>
-        <div class="col col-2 mb-7">
-            <div class="mb-3 text-start">
-                <label for="locationLongitude" class="form-label">Longitude:</label>
-                <input v-model="locationLongitude" type="text" id="locationLongitude" class="form-control">
-            </div>
-            <div class="mb-3 text-start">
-                <label for="locationLatitude" class="form-label">Latitude:</label>
-                <input v-model="locationLatitude" type="text" id="locationLatitude" class="form-control">
+
+        <!-- Additional information -->
+        <div class="row justify-content-center mt-4">
+            <div class="col col-4 mb-4">
+                <div class="mb-3 text-start">
+                    <label for="listingDescription" class="form-label">Lisainfo:</label>
+                    <textarea v-model="addFullListing.additionalInfo" id="listingDescription"
+                              class="form-control form-control-lg"></textarea>
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- Omadused -->
+        <div class="row justify-content-center mt-4">
+            <div class="col col-4 mb-4">
+                <div class="mb-3 text-start">
+                    <label for="listingDescription" class="form-label">Omadused:</label>
+                    <div v-for="feature in features" class="form-check">
+                        <input v-model="feature.featureIsSelected" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{ feature.featureName }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
 
 
     <div class="row justify-content-center mb-4 mt-4">
@@ -64,36 +105,72 @@
             <button @click="abortAddListing" type="button" class="btn btn-dark ms-3">Loobu</button>
         </div>
     </div>
-
-    <CustomFooter></CustomFooter>
+    <add-image-modal ref="addImageModalRef"/>
+<!--    <CustomFooter></CustomFooter>-->
 
 
 </template>
 
 <script>
+import ImageInput from "@/components/ImageInput.vue";
 import router from "@/router";
 import CustomNavigationBar from "@/App.vue";
 import CustomFooter from "@/components/CustomFooter.vue";
+import AddImageModal from "@/components/modals/AddImageModal.vue";
 
 export default {
     name: "AddListingView",
-    components: {CustomFooter, CustomNavigationBar},
+    components: {ImageInput, CustomFooter, CustomNavigationBar, AddImageModal},
 
     data() {
         return {
             message: '',
-            listingId: Number(sessionStorage.getItem('listingId')),
-
+            countyNameFront: '',
+            features:
+                [
+                    {
+                        id: 0,
+                        featureName: '',
+                        featureIsSelected: false
+                    }
+                ],
+            counties:
+                [
+                    {
+                        countyId: 0,
+                        countyName: ''
+                    }
+                ],
+            addFullListing: {
+                ownerUserId: sessionStorage.getItem('userId'),
+                listingId: Number(sessionStorage.getItem('listingId')),
+                listingName: sessionStorage.getItem('listingName'),
+                description: '',
+                additionalInfo: '',
+                price: 0,
+                locationCountyId: 0,
+                locationAddress: '',
+                locationLongitude: 0,
+                locationLatitude: 0,
+                features: [
+                    {
+                        featureId: 0,
+                        featureName: '',
+                        featureIsSelected: true
+                    }
+                ],
+                imagesData: ['']
+            }
         }
     },
-
-
     methods: {
-
+        handleAddImage() {
+            this.$refs.addImageModalRef.$refs.modalRef.openModal()
+        },
         abortAddListing() {
             this.$http.delete("/add-listing", {
                     params: {
-                        listingId: this.listingId
+                        listingId: Number(sessionStorage.getItem('listingId'))
                     }
                 }
             ).then(response => {
@@ -105,16 +182,47 @@ export default {
             })
         },
 
+        getFeatures() {
+            this.$http.get("/add-listing-features")
+                .then(response => {
+                    this.features = response.data
+                })
+                .catch(error => {
+                    router.push({name: 'errorRoute'})
+                })
+        },
+
+        getCounties() {
+            this.$http.get("/add-listing-counties")
+                .then(response => {
+                    this.counties = response.data
+                })
+                .catch(error => {
+                    router.push({name: 'errorRoute'})
+                })
+        },
+
+        setImage(selectedImage) {
+            this.addFullListing.imagesData[0] = selectedImage
+        },
+
         addListingInfo() {
-            this.$http.post("/signup-info", this.listingId
+            this.addFullListing.features = this.features
+            alert(this.addFullListing.features[1].featureId)
+            this.$http.put("/add-listing", this.addFullListing
             ).then(response => {
-                router.push({name: 'homeRoute'})
+                router.push({name: 'myListingsRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
-        }
+        },
 
-    }
+    },
+    mounted() {
+        this.getFeatures()
+        this.getCounties()
+    },
+
 }
 </script>
 

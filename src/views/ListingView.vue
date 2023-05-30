@@ -66,7 +66,7 @@
                     <font-awesome-icon :icon="['fass', 'image']" size="2xl" />
                 </div>
                 <div v-else>
-                    <img class="figure-img" :src="listingResponse.contact.imageData" alt="Molu pilt"/>
+                    <img class="figure-img" :src="listingResponse.contact.imageData"/>
                 </div>
 
             </div>
@@ -163,7 +163,7 @@
 
     </div>
 
-    <CustomFooter></CustomFooter>
+<!--    <CustomFooter></CustomFooter>-->
 </template>
 
 <script>

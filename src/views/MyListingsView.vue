@@ -36,7 +36,7 @@
 
 
   </div>
-    <CustomFooter></CustomFooter>
+<!--    <CustomFooter></CustomFooter>-->
 </template>
 
 <script>
@@ -109,11 +109,7 @@ export default {
                     }
                 })
             }
-
-
-
-        },
-
+        }
     },
 
     beforeMount() {

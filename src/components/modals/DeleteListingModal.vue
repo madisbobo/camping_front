@@ -15,16 +15,28 @@
 
 <script>
 import Modal from "@/components/modals/Modal.vue";
+import router from "@/router";
 
 export default {
     name: "DeleteListingModal",
     components: {Modal},
     methods: {
         executeDelete() {
-            //todo: kirjuta edasi!
-        },
-    }
+            this.$http.delete("/my-listings", {
+                    params: {
+                        listingId: this.listingId
+                    }
+                }
+            ).then(response => {
+                this.$refs.modalRef.closeModal()
+                this.$emit('event-listing-deleted')
+            }).catch(error => {
+                router.push({name: 'errorRoute'})
+            })
+        }
+    },
 }
+
 </script>
 
 <style scoped>

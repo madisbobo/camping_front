@@ -56,13 +56,17 @@
     </nav>
 </template>
 <script>
+
+import AddImageModal from "@/components/modals/AddImageModal.vue";
+
 export default {
     name: 'CustomNavigationBar',
+    components: {AddImageModal},
     props: {
         handleLogout: {},
         userId: {},
-        username: {}
-    }
+        username: {},
+    },
 }
 </script>
 <style>

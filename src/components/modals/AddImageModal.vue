@@ -1,14 +1,15 @@
 <template>
-    <modal ref="modalRef" close-button-name="Ei">
+    <modal class="modal fade add-image-style" ref="modalRef" close-button-name="Ei">
         <template #header>
             Pildi lisamine
         </template>
-<!--        todo: siia on vaja panna pildi input asi..-->
         <template #body>
+            <img :src="addFullListing.imagesData" class="img-thumbnail" alt="add listing images"/>
+            <ImageInput multiple @event-emit-base64="setImage"/>
             Kas soovid siia pilte lisada?
         </template>
         <template #footer>
-            <button @click="executeAddImage" type="button" class="btn btn-primary">Lisa</button>
+            <button @click="closeAddImage" type="button" class="btn btn-primary">Lisa</button>
         </template>
     </modal>
 
@@ -16,18 +17,35 @@
 
 <script>
 import Modal from "@/components/modals/Modal.vue";
+import ImageInput from "@/components/ImageInput.vue";
 
 export default {
     name: "AddImageModal",
-    components: {Modal},
+    components: {ImageInput, Modal},
+    data() {
+        return {
+            addFullListing: {
+                imagesData: ['']
+            }
+        }
+    },
     methods: {
-        executeAddImage() {
-            // todo: kirjuta edasi!!!
+        setImage(selectedImage) {
+            this.addFullListing.imagesData[0] = selectedImage
+        },
+        closeAddImage() {
+            this.$refs.modalRef.closeModal()
         },
     }
 }
 </script>
 
 <style scoped>
+.img-thumbnail {
+    height: 150px;
+}
+.add-image-style {
+    height: 1200px;
+}
 
 </style>
