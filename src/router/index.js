@@ -13,6 +13,7 @@ import ListingsView from "@/views/ListingsView.vue";
 import editMyProfileView from "@/views/EditMyProfileView.vue";
 import AddListingView from "@/views/AddListingView.vue";
 import ListingView from "@/views/ListingView.vue";
+import EditListingView from "@/views/EditListingView.vue";
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/my-listings',
     name: 'myListingsRoute',
     component: MyListingsView
+  },
+  {
+    path: '/edit-listing/:id',
+    name: 'editListingRoute',
+    component: EditListingView
   },
   {
     path: '/add-listing',

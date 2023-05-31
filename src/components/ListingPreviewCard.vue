@@ -17,7 +17,7 @@
                 <!--Buttons -->
                 <div v-if="showButtons === true" class="row mb-3 justify-content-center">
                     <div class="col col-6">
-                        <button @click="editListing" type="button" class="btn btn-dark">Muuda</button>
+                        <button @click="editListing(listing.listingId)" type="button" class="btn btn-dark">Muuda</button>
                     </div>
                     <div class="col col-6">
                         <button @click="deleteListing(listing.listingId)" type="button" class="btn btn-outline-dark">Kustuta</button>
@@ -37,8 +37,8 @@ export default {
         showButtons: false,
     },
     methods: {
-        editListing() {
-            alert("Muudan listingut")
+        editListing(listingId) {
+            router.push({name: 'editListingRoute', params: {id: listingId}})
         },
 
         deleteListing(listingId) {
@@ -56,9 +56,9 @@ export default {
 
 
         navigateToListing(listingId) {
-            alert(listingId)
             router.push({name: 'listingRoute', params: {id: listingId}})
-        }
+        },
+
     }
 }
 </script>

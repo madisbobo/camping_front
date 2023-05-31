@@ -21,7 +21,7 @@
                 <h4 class="text-start mb-4">Kõrgelt hinnatud:</h4>
 
                 <!--Listing card-->
-                <ListingPreviewCard :listings-preview="allListingsPreview"/>
+                <ListingPreviewCard :listings-preview="listingsPreviewHighestRated"/>
 
             </div>
         </div>
@@ -31,7 +31,7 @@
                 <h4 class="text-start mb-4">Hiljuti lisatud:</h4>
 
                 <!--Listing card-->
-                <ListingPreviewCard :listings-preview="allListingsPreview"/>
+                <ListingPreviewCard :listings-preview="listingsPreviewNewest"/>
 
             </div>
         </div>
@@ -62,7 +62,17 @@ export default {
     data() {
         return {
             message: '',
-            allListingsPreview: [
+            listingsPreviewHighestRated: [
+                {
+                    listingId: 0,
+                    listingName: '',
+                    price: 0,
+                    imageData: '',
+                    numberOfScores: 0,
+                    averageScore: 0.0
+                }
+            ],
+            listingsPreviewNewest: [
                 {
                     listingId: 0,
                     listingName: '',
@@ -79,23 +89,32 @@ export default {
         router() {
             return router
         },
-        getAllListingsPreview() {
-            this.$http.get("/listings")
+        getListingsPreviewHighestRated() {
+            this.$http.get("/listings-by-rating")
                 .then(response => {
-                    this.allListingsPreview = response.data
+                    this.listingsPreviewHighestRated = response.data
                 })
                 .catch(error => {
                     router.push({name: 'errorRoute'})
                 })
         },
-        editContact() {
-            alert("Muuda oma listingut")
-        }
+
+        getListingsPreviewNewest() {
+            this.$http.get("/listings-by-listing-id")
+                .then(response => {
+                    this.listingsPreviewNewest = response.data
+                })
+                .catch(error => {
+                    router.push({name: 'errorRoute'})
+                })
+        },
+
 
     },
 
     beforeMount() {
-        this.getAllListingsPreview()
+        this.getListingsPreviewHighestRated()
+        this.getListingsPreviewNewest()
     }
 }
 

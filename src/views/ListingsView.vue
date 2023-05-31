@@ -13,8 +13,8 @@
                         Sorteeri <font-awesome-icon :icon="['fas', 'sort']" class="ms-1"/>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Hind</a></li>
-                        <li><a class="dropdown-item" href="#">Reiting</a></li>
+                        <li><a @click="sortByPrice" class="dropdown-item" href="#">Hind</a></li>
+                        <li><a @click="sortByRating" class="dropdown-item" href="#">Reiting</a></li>
                     </ul>
                 </div>
             </div>
@@ -68,9 +68,28 @@ export default {
                     router.push({name: 'errorRoute'})
                 })
         },
-        editContact() {
-            alert("Muuda oma listingut")
-        }
+
+        sortByPrice() {
+            alert("Sorteeri hinna alusel")
+            this.$http.get("/listings-sortby-price-asc")
+                .then(response => {
+                    this.allListingsPreview = response.data
+                })
+                .catch(error => {
+                    router.push({name: 'errorRoute'})
+                })
+        },
+
+        sortByRating() {
+            alert("Sorteeri reitingu alusel")
+            this.$http.get("/listings-sortby-rating")
+                .then(response => {
+                    this.allListingsPreview = response.data
+                })
+                .catch(error => {
+                    router.push({name: 'errorRoute'})
+                })
+        },
 
     },
 
