@@ -1,5 +1,5 @@
 <template>
-    <footer class="text-center text-white mt-5" style="background-color: #f1f1f1;">
+    <footer class="text-center text-white mt-5 bg-light">
         <!-- Grid container -->
         <div class="container pt-4">
 
@@ -84,7 +84,7 @@
         <!-- Grid container -->
 
         <!-- Copyright -->
-        <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div class="text-center text-dark p-3" style="background-color: rgb(65, 184, 131);">
             © 2023 Copyright: Camping OÜ
         </div>
         <!-- Copyright -->

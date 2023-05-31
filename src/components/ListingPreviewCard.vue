@@ -20,7 +20,7 @@
                         <button @click="editListing" type="button" class="btn btn-dark">Muuda</button>
                     </div>
                     <div class="col col-6">
-                        <button @click="deleteListing(listing.listingId)" type="button" class="btn btn-dark">Kustuta</button>
+                        <button @click="deleteListing(listing.listingId)" type="button" class="btn btn-outline-dark">Kustuta</button>
                     </div>
                 </div>
             </div>
