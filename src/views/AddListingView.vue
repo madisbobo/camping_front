@@ -6,12 +6,23 @@
         </div>
     </div>
     <form>
+
+        <!-- SUBHEADING 1 -->
+        <div class="row justify-content-center mt-4 mb-3">
+            <div class="col col-4">
+                <div class="text-start">
+                    <h5 class="fw-bold">Nimi, kirjeldus ja asukoht</h5>
+                </div>
+            </div>
+        </div>
+
         <!-- Name and description -->
         <div class="row justify-content-center mb-4">
             <div class="col col-4">
                 <div class="mb-3 text-start">
                     <label for="listingName" class="form-label ">Platsi nimi: </label>
-                    <input v-model="addFullListing.listingName" type="text" id="listingName" class="form-control">
+                    <input v-model="addFullListing.listingName" type="text" id="listingName" class="form-control"
+                           disabled>
                 </div>
 
                 <div class="mb-3 text-start">
@@ -23,8 +34,8 @@
         </div>
 
         <!-- Location info -->
-        <div class="row justify-content-center mb-4 mt-4">
-            <div class="col col-2 mb-7">
+        <div class="row justify-content-center mb-4">
+            <div class="col col-2 mb-4">
                 <div class="mb-3 text-start">
                     <label for="address" class="form-label">Aadress:</label>
                     <input v-model="addFullListing.locationAddress" type="text" id="address" class="form-control">
@@ -37,7 +48,9 @@
                             {{ addFullListing.locationCountyId === 0 ? 'Kõik maakonnad' : countyNameFront }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuButton">
-                            <li @click ="addFullListing.locationCountyId = county.countyId; countyNameFront = county.countyName" v-for="county in counties"><a class="dropdown-item" href="#">{{ county.countyName }}</a></li>
+                            <li @click="addFullListing.locationCountyId = county.countyId; countyNameFront = county.countyName"
+                                v-for="county in counties"><a class="dropdown-item" href="#">{{ county.countyName }}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -49,7 +62,18 @@
                 </div>
                 <div class="mb-3 text-start">
                     <label for="locationLatitude" class="form-label">Latitude:</label>
-                    <input v-model="addFullListing.locationLatitude" type="text" id="locationLatitude" class="form-control">
+                    <input v-model="addFullListing.locationLatitude" type="text" id="locationLatitude"
+                           class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- SUBHEADING 2 -->
+        <div class="row justify-content-center mt-4 mb-3">
+            <div class="col col-4">
+                <div class="text-start">
+                    <h5 class="fw-bold">Pildid</h5>
                 </div>
             </div>
         </div>
@@ -60,29 +84,40 @@
             <div class="col col-4 mb-4">
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Lisa pildid:</label><br>
-                    <img v-if="addFullListing.imagesData[0] === ''"  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="img-thumbnail mb-3" alt="profile image"/>
-                    <img v-else :src="addFullListing.imagesData[0]" class="img-thumbnail mb-3" alt="image"/>
-                    <br>
-                    <button @click="handleAddImage" type="button" class="btn btn-dark me-3">Lisa pildid</button>
-                    <!--                    <ImageInput @event-emit-base64="setImage"/>-->
+                    <div v-for="imageData in addFullListing.imagesData">
+                        <img v-if="imageData === ''"  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="img-thumbnail mb-3" alt="profile image"/>
+                        <img v-else :src="addFullListing.imagesData" class="img-thumbnail mb-3" alt="image"/>
+                        <br>
+                        <!--                    <button @click="handleAddImage" type="button" class="btn btn-dark me-3">Lisa pildid</button>-->
+                        <ImageInput @event-emit-base64="setImage"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SUBHEADING 3 -->
+        <div class="row justify-content-center mt-4 mb-3">
+            <div class="col col-4">
+                <div class="text-start">
+                    <h5 class="fw-bold">Hind, omadused, lisainfo</h5>
                 </div>
             </div>
         </div>
 
-        <!-- Additional information -->
-        <div class="row justify-content-center mt-4">
-            <div class="col col-4 mb-4">
+        <!-- Pricing -->
+        <div class="row justify-content-center">
+            <div class="col col-2 mb-4">
                 <div class="mb-3 text-start">
-                    <label for="listingDescription" class="form-label">Lisainfo:</label>
-                    <textarea v-model="addFullListing.additionalInfo" id="listingDescription"
-                              class="form-control form-control-lg"></textarea>
+                    <label for="price" class="form-label">Hind inimese kohta per öö (€):</label>
+                    <input v-model="addFullListing.price" type="number" id="number" min="1" class="form-control"
+                           placeholder="10">
                 </div>
             </div>
+            <div class="col col-2 mb-4"></div>
         </div>
 
         <!-- Omadused -->
-        <div class="row justify-content-center mt-4">
-            <div class="col col-4 mb-4">
+        <div class="row justify-content-center">
+            <div class="col col-4 mb-3">
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Omadused:</label>
                     <div v-for="feature in features" class="form-check">
@@ -96,6 +131,16 @@
         </div>
 
 
+        <!-- Additional information -->
+        <div class="row justify-content-center">
+            <div class="col col-4 mb-4">
+                <div class="mb-3 text-start">
+                    <label for="listingDescription" class="form-label">Lisainfo:</label>
+                    <textarea v-model="addFullListing.additionalInfo" id="listingDescription"
+                              class="form-control form-control-lg"></textarea>
+                </div>
+            </div>
+        </div>
     </form>
 
 
@@ -105,6 +150,13 @@
             <button @click="router().push({name: 'myListingsRoute'})" type="button" class="btn btn-dark ms-3">Loobu</button>
         </div>
     </div>
+
+    <div class="row justify-content-center mb-4 mt-4">
+        <div class="col col-6">
+            <AlertDanger :message="message"/>
+        </div>
+    </div>
+
     <add-image-modal ref="addImageModalRef"/>
 <!--    <CustomFooter></CustomFooter>-->
 
@@ -117,16 +169,17 @@ import router from "@/router";
 import CustomNavigationBar from "@/App.vue";
 import CustomFooter from "@/components/CustomFooter.vue";
 import AddImageModal from "@/components/modals/AddImageModal.vue";
+import AlertDanger from "@/components/alerts/AlertDanger.vue";
 
 export default {
     name: "AddListingView",
-    components: {ImageInput, CustomFooter, CustomNavigationBar, AddImageModal},
+    components: {AlertDanger, ImageInput, CustomFooter, CustomNavigationBar, AddImageModal},
 
     data() {
         return {
             message: '',
-            listingInfoAdded: false,
             countyNameFront: '',
+            listingInfoAdded: false,
             features:
                 [
                     {
@@ -148,7 +201,7 @@ export default {
                 listingName: sessionStorage.getItem('listingName'),
                 description: '',
                 additionalInfo: '',
-                price: 0,
+                price: 1,
                 locationCountyId: 0,
                 locationAddress: '',
                 locationLongitude: 0,
@@ -180,6 +233,7 @@ export default {
             ).then(response => {
                 sessionStorage.removeItem('locationId')
                 sessionStorage.removeItem('locationName')
+                router.push({name: 'homeRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
@@ -205,21 +259,24 @@ export default {
                 })
         },
 
-        // setImage(selectedImage) {
-        //     this.addFullListing.imagesData[0] = selectedImage
-        // },
+        setImage(selectedImages) {
+            this.addFullListing.imagesData = selectedImages
+        },
 
         addListingInfo() {
-            this.addFullListing.features = this.features
-            alert(this.addFullListing.features[1].featureId)
-            this.$http.put("/add-listing", this.addFullListing
-            ).then(response => {
-                this.listingInfoAdded = true
-                router.push({name: 'myListingsRoute'})
-            }).catch(error => {
-                this.listingInfoAdded = true
-                router.push({name: 'errorRoute'})
-            })
+            if (this.addFullListing.description === '' || this.addFullListing.locationAddress === '' || this.addFullListing.imagesData[0].length === 0 || this.addFullListing.imagesData.length === 0) {
+                this.message = 'Täida kõik kohustuslikud väljad ja/või lisa vähemalt üks pilt'
+            } else {
+                this.addFullListing.features = this.features
+                this.$http.put("/add-listing", this.addFullListing
+                ).then(response => {
+                    this.listingInfoAdded = true
+                    router.push({name: 'myListingsRoute'})
+                }).catch(error => {
+                    this.listingInfoAdded = true
+                    router.push({name: 'errorRoute'})
+                })
+            }
         },
 
     },

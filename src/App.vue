@@ -3,7 +3,6 @@
     <CustomNavigationBar :handle-logout="handleLogout" :user-id="userId" :username="username"/>
 
     <logout-modal ref="logoutModalRef" @event-update-nav-menu="updateNavMenu"/>
-    <add-image-modal ref="addImageModalRef"/>
     <router-view @event-update-nav-menu="updateNavMenu"/>
 
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <input type="file" @change="handleImage" accept="image/x-png,image/jpeg,image/gif">
+    <input type="file" multiple @change="handleImage" accept="image/x-png,image/jpeg,image/gif">
 </template>
 <script>
 export default {
