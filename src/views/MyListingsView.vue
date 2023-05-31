@@ -1,38 +1,42 @@
 <template>
     <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col col-4 mb-4 ">
+        <div class="row justify-content-center mb-5">
+            <div class="col col-4">
                 <h1>Minu Pakkumised</h1>
             </div>
         </div>
 
+        <AlertSuccess :success-message="successMessage"/>
         <AlertDanger :message="message"/>
 
+        <!-- LISA PAKKUMINE -->
+        <div class="row justify-content-center mb-5">
+            <div class="col col-8">
+                <h4 class="text-start mb-3">Lisa pakkumine:</h4>
+                <div class="row">
+                    <div class="col col-8">
+                        <div class="input-group mb-3">
+                            <input v-model="newListing.listingName" type="text" class="form-control" placeholder="Telkimisplatsi nimi">
+                            <button @click="addNewListing" class="btn btn-dark" type="button" id="button-addon2">Lisa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MINU PAKKUMISED -->
         <div class="row justify-content-center">
             <div class="col col-8">
                 <h4 class="text-start mb-3">Minu pakkumised:</h4>
             </div>
             <div class="col col-8 mb-4">
                 <!--Listing card-->
-                <ListingPreviewCard :listings-preview="myListingsPreview" :show-buttons="true"/>
+                <ListingPreviewCard :listings-preview="myListingsPreview" :show-buttons="true" @event-update-page="updatePage"/>
             </div>
         </div>
 
 
-    <div class="row justify-content-center">
-        <div class="col col-8">
-            <h4 class="text-start mb-3">Lisa pakkumine:</h4>
-            <div class="row">
-                <div class="col col-8">
-                    <div class="input-group mb-3">
-                        <input v-model="newListing.listingName" type="text" class="form-control" placeholder="Telkimisplatsi nimi">
-                        <button @click="addNewListing" class="btn btn-dark" type="button" id="button-addon2">Lisa
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
   </div>
@@ -44,13 +48,15 @@ import router from "@/router";
 import ListingPreviewCard from "@/components/ListingPreviewCard.vue";
 import AlertDanger from "@/components/alerts/AlertDanger.vue";
 import CustomFooter from "@/components/CustomFooter.vue";
+import AlertSuccess from "@/components/alerts/AlertSuccess.vue";
 
 export default {
     name: "MyListingsView",
-    components: {CustomFooter, AlertDanger, ListingPreviewCard},
+    components: {AlertSuccess, CustomFooter, AlertDanger, ListingPreviewCard},
     data() {
         return {
             message: '',
+            successMessage: '',
             myListingsPreview: [
                 {
                     listingId: 0,
@@ -76,6 +82,12 @@ export default {
 
     },
     methods: {
+
+        updatePage() {
+            this.successMessage = 'Pakkumine edukalt kustutatud.'
+            this.getMyListingsPreview()
+        },
+
         getMyListingsPreview() {
             this.$http.get("/my-listings", {
                     params: {
