@@ -3,7 +3,6 @@
     <!--Navigation bar-->
     <CustomNavigationBar :handle-logout="handleLogout" :user-id="userId" :username="username"/>
 
-
     <router-view @event-update-nav-menu="updateNavMenu"/>
 </template>
 
@@ -11,9 +10,10 @@
 <script>
 import router from "@/router";
 import CustomNavigationBar from "@/components/CustomNavigationBar.vue";
+import SignupInfoView from "@/views/SignupInfoView.vue";
 
 export default {
-    components: {CustomNavigationBar},
+    components: {SignupInfoView, CustomNavigationBar},
     data() {
         return {
             userId: sessionStorage.getItem('userId'),
@@ -24,9 +24,11 @@ export default {
     },
     methods: {
         updateNavMenu() {
+            alert("olen siin UPDATE NAV MENU")
             this.userId = sessionStorage.getItem('userId')
             this.roleName = sessionStorage.getItem('roleName')
             this.username = sessionStorage.getItem('username')
+
         },
         handleLogout() {
             sessionStorage.clear()

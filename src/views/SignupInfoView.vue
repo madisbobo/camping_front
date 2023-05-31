@@ -34,7 +34,9 @@
 
             <!--Add profile image-->
             <div class="col col-4 mb-4">
-                <img v-if="userContact.imageData === ''"  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="img-thumbnail" alt="profile image"/>
+                <img v-if="userContact.imageData === ''"
+                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                     class="img-thumbnail" alt="profile image"/>
                 <img v-else :src="userContact.imageData" class="img-thumbnail" alt="profile image"/>
                 <ImageInput @event-emit-base64="setImage"/>
                 <div/>
@@ -45,7 +47,10 @@
         <div class="row justify-content-center mb-4 mt-4">
             <div class="col col-4">
                 <button @click="signupAddContact" type="submit" class="btn btn-dark me-3">Registreeri</button>
-                <button @click="router().push({name: 'signupRoute'})" type="button" class="btn btn-dark ms-3">Loobu</button>
+                <button @click="abortSignup" type="button" class="btn btn-dark ms-3">Loobu</button>
+                <!--
+                                <button @click="router().push({name: 'signupRoute'})" type="button" class="btn btn-dark ms-3">Loobu</button>
+                -->
             </div>
 
         </div>
@@ -66,7 +71,6 @@ export default {
     components: {CustomFooter, ImageInput, AlertDanger},
     data() {
         return {
-            contactAdded: false,
             message: '',
             userContact: {
                 userId: Number(sessionStorage.getItem('userId')),
@@ -95,7 +99,10 @@ export default {
                 }
             ).then(response => {
                 sessionStorage.clear()
+                alert("olen siin1")
                 this.$emit('event-update-nav-menu')
+                alert("olen siin2")
+                router.push({name: 'homeRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
@@ -104,18 +111,12 @@ export default {
         signupAddContact() {
             this.$http.post("/signup-info", this.userContact
             ).then(response => {
-                this.contactAdded = true
                 router.push({name: 'homeRoute'})
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
         }
 
-    },
-    beforeRouteLeave() {
-        if (!this.contactAdded) {
-            this.abortSignup();
-        }
     },
 }
 </script>

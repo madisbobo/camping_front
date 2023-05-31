@@ -55,9 +55,14 @@
         </div>
     </nav>
 </template>
+
+
 <script>
+import SignupInfoView from "@/views/SignupInfoView.vue";
+
 export default {
     name: 'CustomNavigationBar',
+    components: {SignupInfoView},
     props: {
         handleLogout: {},
         userId: {},
