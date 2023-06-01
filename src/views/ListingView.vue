@@ -267,6 +267,8 @@ export default {
 
 <style scoped>
 
+
+
 .profile-img {
     height: 150px;
     border-radius: 100%;
@@ -386,5 +388,10 @@ export default {
     opacity: 0.9;
 }
 
+ .container {
+     max-width: 800px; /* Adjust the value to set the desired width */
+     margin-left: auto;
+     margin-right: auto;
+ }
 
 </style>
