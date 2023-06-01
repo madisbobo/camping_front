@@ -1,6 +1,6 @@
 <template>
   <h1 class="mt-4">Minu Broneeringud</h1>
-<!--    <CustomFooter></CustomFooter>-->
+    <CustomFooter></CustomFooter>
 
 </template>
 

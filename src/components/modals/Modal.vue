@@ -1,6 +1,6 @@
 <template>
     <!-- Modal -->
-    <div v-if="isOpen" class="modal fade2 show" id="campingModal" tabindex="-1" @click="closeModal">
+    <div v-if="isOpen" class="modal fade2 show" id="campingModal" tabindex="-1" @click="closeModal" >
         <div class="modal-dialog" @click.stop>
             <div class="modal-content">
                 <div class="modal-header">
