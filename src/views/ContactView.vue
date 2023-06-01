@@ -1,18 +1,28 @@
 <template>
-    <h1 class="mt-4">Kontakt</h1>
-    <div class="container mt-5">
-        <div class="row justify-content-start">
-            <div class="col">
-                Meie idukas on väga väike, mis tähendab, et kõigi töötajatega isiklikku kontakti astumine on imekiire.
-            </div>
-            <div class="col">
-                <p>Võta ühendust tootejuhiga: Anton Antonson.</p>
-                <p>Telefoni number +372 55 0607</p>
-                <p>E-posti aadress anton@telkima.ee</p>
-            </div>
+
+    <div class="header-image">
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col col-4 mb-7">
+            <h2>Meist</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col col-4 mb-4">
+
         </div>
 
     </div>
+    <div class="row justify-content-center">
+        <div class="col col-4 mb-4">
+            Camping OÜ<br>
+            info@telkima.ee
+
+
+        </div>
+    </div>
+
     <CustomFooter></CustomFooter>
 </template>
 
@@ -26,5 +36,14 @@ export default {
 </script>
 
 <style scoped>
+
+
+.header-image {
+    background-image: url('https://t3.ftcdn.net/jpg/02/54/66/08/360_F_254660811_nEM2z4ejjcNnCGJvLvlYK5xx5a4gzyRc.jpg');
+    background-size: cover;
+    height: 400px;
+    background-position: center;
+    margin-bottom: 40px;
+}
 
 </style>

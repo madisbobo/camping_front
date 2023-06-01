@@ -3,7 +3,6 @@
     <CustomNavigationBar :handle-logout="handleLogout" :user-id="userId" :username="username"/>
 
     <logout-modal ref="logoutModalRef" @event-update-nav-menu="updateNavMenu"/>
-    <router-view @event-update-nav-menu="updateNavMenu"/>
     <AlertSuccess :message="successMessage"/>
     <AlertDanger :message="dangerMessage"/>
 
