@@ -1,24 +1,25 @@
 <template>
-    <div class="container mt-4">
+    <div class="container mt-5">
         <AlertDanger :message="message"/>
 
         <!-------- KOHA NIMI -------->
-        <div class="row justify-content-center mb-5">
+        <div class="row justify-content-center mb-3">
             <div class="col col-12 text-start">
-                <h3>{{ listingResponse.listingName }}</h3>
+                <h1>{{ listingResponse.listingName }}</h1>
             </div>
         </div>
 
         <!-------- PILDID JA KIRJELDUS -------->
         <div class="row justify-content-center mb-5">
-            <div class="col col-6 text-start">
+            <div class="col col-5 text-start">
                 <div v-if="listingResponse.imagesData.length === 2">
-                    <font-awesome-icon :icon="['fass', 'image']" size="2xl" />
+                    <font-awesome-icon :icon="['fass', 'image']" size="2xl"/>
                 </div>
                 <div v-else>
                     <img class="figure-img listing-img" :src="listingResponse.imagesData[0]" alt="">
                 </div>
             </div>
+            <div class="col col-1 text-start"></div>
             <div class="col col-6 text-start">
                 <h3>Kirjeldus:</h3>
                 <p>{{ listingResponse.listingDescription }}</p>
@@ -35,7 +36,7 @@
                     <font-awesome-icon :icon="['fas', 'check']"/>
                 </span>
                         <span v-else>
-                    <font-awesome-icon :icon="['fas', 'x']" />
+                    <font-awesome-icon :icon="['fas', 'x']"/>
                 </span>
                         {{ feature.featureName }}
                     </li>
@@ -45,32 +46,47 @@
 
         <!-------- ASUKOHT -------->
         <div class="row justify-content-center mb-5">
-            <div class="col col-12 text-start">
+            <div class="col col-5 text-start">
                 <h3>Asukoht</h3>
-                <p>{{ listingResponse.locationAddress }}</p>
-                <button @click="openMap" type="submit" class="btn btn-dark me-3">Vaata kaardilt</button>
-            </div>
-        </div>
+                <p><span class="fw-bold">Aadress:</span> {{ listingResponse.locationAddress }}
+                    {{ listingResponse.contact.lastName }}</p>
+                <p><span class="fw-bold">Latitude:</span> {{ listingResponse.locationLatitude }}</p>
+                <p><span class="fw-bold">Longitude:</span> {{ listingResponse.locationLongitude }}</p>
 
-        <!-------- KONTAKT -------->
-        <div class="row justify-content-center mb-5">
-            <div class="col col-6 text-start">
+                <div id=" map-container-google-2
+            " class="z-depth-1-half map-container-2">
+                    <iframe v-if="listingResponse.locationLongitude !== 0 || listingResponse.locationLatitude !== 0"
+                            :src="`https://maps.google.com/maps?q=${listingResponse.locationLongitude},${listingResponse.locationLatitude}&output=embed`"
+                            allowfullscreen></iframe>
+                    <iframe v-else
+                            src="https://www.google.com/maps/place/Estonia/@58.8056051,24.4744411,7.75z/data=!4m6!3m5!1s0x4692949c82a04bfd:0x40ea9fba4fb425c3!8m2!3d58.595272!4d25.0136071!16zL20vMDJrbW0?entry=ttu&output=embed`"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col col-1 text-start">
+            </div>
+            <div class="col col-3 text-start">
                 <h3>Kontakt</h3>
                 <p><span class="fw-bold">Võõrustaja:</span> {{ listingResponse.contact.firstName }}
                     {{ listingResponse.contact.lastName }}</p>
                 <p><span class="fw-bold">E-post:</span> {{ listingResponse.contact.email }}</p>
                 <p><span class="fw-bold">Telefon:</span> {{ listingResponse.contact.phoneNo }}</p>
             </div>
-            <div class="col col-6">
+            <div class="col col-3">
                 <div v-if="listingResponse.contact.imageData === 0">
-                    <font-awesome-icon :icon="['fass', 'image']" size="2xl" />
+                    <font-awesome-icon :icon="['fass', 'image']" size="2xl"/>
                 </div>
                 <div v-else>
                     <img class="figure-img profile-img" :src="listingResponse.contact.imageData"/>
                 </div>
 
             </div>
+
         </div>
+
+
+
+
 
         <!-------- LISAINFO -------->
         <div class="row justify-content-center mb-5">
@@ -180,6 +196,7 @@ export default {
             listingId: '',
             message: '',
             messageDate: '',
+            showMap: false,
             listingResponse: {
                 listingName: '',
                 listingDescription: '',
@@ -236,6 +253,9 @@ export default {
         },
         openMap() {
             alert("Open map")
+            if (this.listingResponse.locationLatitude === 0 || this.listingResponse.locationLongitude === 0) {
+
+            }
         },
         calculateNumberOfNights() {
             if (this.checkInDate && this.checkOutDate) {
@@ -269,12 +289,14 @@ export default {
 <style scoped>
 
 .profile-img {
-    height: 150px;
+    height: 120px;
     border-radius: 100%;
 }
 
 .listing-img {
-    width: 600px;
+    max-width: 100%;
+    max-height: 500px;
+    height: auto;
     border-radius: 1%;
 }
 
@@ -385,6 +407,21 @@ export default {
 .booking-form .submit-btn:hover,
 .booking-form .submit-btn:focus {
     opacity: 0.9;
+}
+
+.map-container-2 {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+}
+
+.map-container-2 iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }
 
 
