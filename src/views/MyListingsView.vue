@@ -6,7 +6,6 @@
             </div>
         </div>
 
-        <AlertSuccess :success-message="successMessage"/>
         <AlertDanger :message="message"/>
 
         <!-- LISA PAKKUMINE -->
@@ -84,7 +83,7 @@ export default {
     methods: {
 
         updatePage() {
-            this.successMessage = 'Pakkumine edukalt kustutatud.'
+            this.$emit('event-listing-deleted', 'Telkimisplats edukalt kustutatud.')
             this.getMyListingsPreview()
         },
 
@@ -104,7 +103,7 @@ export default {
         addNewListing() {
             this.message = ''
             if (this.newListing.listingName === '') {
-                this.message = 'Täida tühi väli'
+                this.$emit('event-error-message', 'Täida tühi väli.')
             } else {
                 this.$http.post("/my-listings", this.newListing
                 ).then(response => {

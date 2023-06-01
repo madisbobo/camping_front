@@ -50,36 +50,22 @@
             <!-- Section: Social media -->
             <section class="mb-4">
                 <!-- Facebook -->
-                <a
-                        class="btn btn-link btn-floating btn-lg text-dark m-1"
-                        href="#!"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                >
-                    <font-awesome-icon :icon="['fas', 'x']"/>
+                <a class="btn btn-link btn-lg m-1" href="https://www.facebook.com/" target="_blank">
+                    <img src="../assets/facebook.svg" class="footer-social-media"/>
                 </a>
 
                 <!-- Twitter -->
-                <a
-                        class="btn btn-link btn-floating btn-lg text-dark m-1"
-                        href="#!"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                >
-                    <font-awesome-icon :icon="['fas', 'x']"/>
+                <a class="btn btn-link btn-lg m-1" href="https://www.twitter.com/" target="_blank">
+                    <img src="../assets/twitter.svg" class="footer-social-media"/>
                 </a>
 
                 <!-- Instagram -->
-                <a
-                        class="btn btn-link btn-floating btn-lg text-dark m-1"
-                        href="#!"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                >
-                    <font-awesome-icon :icon="['fas', 'x']"/>
+                <a class="btn btn-link btn-lg m-1" href="https://www.instagram.com/" target="_blank">
+                    <img src="../assets/instagram.svg" class="footer-social-media"/>
                 </a>
             </section>
             <!-- Section: Social media -->
+
         </div>
         <!-- Grid container -->
 
@@ -99,5 +85,9 @@ export default {
 footer {
     position: relative;
     bottom: 0;
+}
+
+.footer-social-media{
+    height: 35px;
 }
 </style>

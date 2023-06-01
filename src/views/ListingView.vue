@@ -196,6 +196,7 @@ export default {
                         featureIsSelected: true
                     }
                 ],
+                countyId: 0,
                 countyName: '',
                 locationAddress: '',
                 locationLongitude: 0,

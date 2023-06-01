@@ -45,7 +45,7 @@
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ listingResponse.countyName === '' ? 'Kõik maakonnad' : listingResponse.countyName }}
+                            {{ listingResponse.countyName }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuButton">
                             <li @click="addFullListing.locationCountyId = county.countyId; listingResponse.countyName = county.countyName"
@@ -84,10 +84,10 @@
             <div class="col col-4 mb-4">
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Lisa pildid:</label><br>
-                    <img v-if="listingResponse.imagesData[0] === ''"
+                    <img v-if="addFullListing.imagesData[0] === ''"
                          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                          class="img-thumbnail mb-3" alt="profile image"/>
-                    <img v-else :src="listingResponse.imagesData[0]" class="img-thumbnail mb-3" alt="image"/>
+                    <img v-else :src="addFullListing.imagesData[0]" class="img-thumbnail mb-3" alt="image"/>
                     <br>
                     <ImageInput @event-emit-base64="setImage"/>
                 </div>
@@ -175,6 +175,8 @@ import ImageInput from "@/components/ImageInput.vue";
 export default {
     name: "EditListingView",
     components: {ImageInput, CustomFooter, AlertDanger, ListingPreviewCard},
+    emits: ['event-listing-edited'],
+
     data() {
         return {
             listingId: '',
@@ -203,7 +205,9 @@ export default {
                         featureIsSelected: true
                     }
                 ],
+                countyId: 0,
                 countyName: '',
+                locationId: 0,
                 locationAddress: '',
                 locationLongitude: 0,
                 locationLatitude: 0,
@@ -219,13 +223,14 @@ export default {
                 price: 0
             },
             addFullListing: {
-                ownerUserId: sessionStorage.getItem('userId'),
-                listingId: this.listingId,
+                ownerUserId: Number(sessionStorage.getItem('userId')),
+                listingId: 0,
                 listingName: '',
                 description: '',
                 additionalInfo: '',
                 price: 0,
                 locationCountyId: 0,
+                locationId: 0,
                 locationAddress: '',
                 locationLongitude: 0,
                 locationLatitude: 0,
@@ -242,6 +247,7 @@ export default {
             }
         }
     },
+
     methods: {
         router() {
             return router
@@ -255,6 +261,9 @@ export default {
                 }
             ).then(response => {
                 this.listingResponse = response.data
+                this.addFullListing.imagesData[0] = this.listingResponse.imagesData[0]
+                this.addFullListing.locationCountyId = this.listingResponse.countyId
+                this.addFullListing.locationId = this.listingResponse.locationId
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
@@ -271,20 +280,19 @@ export default {
         },
 
         setImage(selectedImage) {
-            this.listingResponse.imagesData[0] = selectedImage
+            this.addFullListing.imagesData[0] = selectedImage
+            alert(this.addFullListing.imagesData[0])
         },
 
         addListingInfo() {
             this.mapToAddFullListing()
-            alert(this.addFullListing.locationCountyId)
-            alert(this.addFullListing.locationCountyId)
-            alert(this.addFullListing.locationCountyId)
-
+            alert(this.addFullListing.locationId)
             if (this.addFullListing.description === '' || this.addFullListing.locationAddress === '') {
                 this.message = 'Täida kõik kohustuslikud väljad ja/või lisa vähemalt üks pilt'
             } else {
-                this.$http.put("/add-listing", this.addFullListing
+                this.$http.put("/edit-listing", this.addFullListing
                 ).then(response => {
+                    this.$emit('event-listing-edited', 'Telkimisplatsi info edukalt muudetud!');
                     router.push({name: 'myListingsRoute'})
                 }).catch(error => {
                     router.push({name: 'errorRoute'})
@@ -293,7 +301,7 @@ export default {
         },
 
         mapToAddFullListing() {
-            this.addFullListing.listingId = this.listingId
+            this.addFullListing.listingId = Number(this.listingId)
             this.addFullListing.listingName = this.listingResponse.listingName
             this.addFullListing.description = this.listingResponse.listingDescription
             this.addFullListing.additionalInfo = this.listingResponse.listingAdditionalInfo
@@ -301,9 +309,7 @@ export default {
             this.addFullListing.locationAddress = this.listingResponse.locationAddress
             this.addFullListing.locationLongitude = this.listingResponse.locationLongitude
             this.addFullListing.locationLatitude = this.listingResponse.locationLatitude
-            this.addFullListing.imagesData[0] = this.listingResponse.imagesData
-            this.addFullListing.features = this.features
-
+            this.addFullListing.features = this.listingResponse.features
 
         }
 
