@@ -64,7 +64,8 @@ export default {
             message: '',
             loginResponse: {
                 userId: 0,
-                roleName: ''
+                roleName: '',
+                profileIsCompleted: false,
         },
             errorResponse: {
                 message: '',
@@ -91,11 +92,17 @@ export default {
                 }
             ).then(response => {
                 this.loginResponse = response.data
+                alert(this.loginResponse.profileIsCompleted)
                 sessionStorage.setItem('userId', this.loginResponse.userId)
                 sessionStorage.setItem('roleName', this.loginResponse.roleName)
                 sessionStorage.setItem('username', this.username)
                 this.$emit('event-update-nav-menu')
-                router.push({name:'homeRoute'})
+                if (this.loginResponse.profileIsCompleted === false) {
+                    router.push({name: 'editMyProfileRoute'})
+                } else {
+                    router.push({name:'homeRoute'})
+                }
+
             }).catch(error => {
                 this.errorResponse = error.response.data
                 if (this.errorResponse.errorCode === 111) {

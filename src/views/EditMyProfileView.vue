@@ -85,13 +85,17 @@ export default {
         },
 
         editContact() {
-            this.userContact.userId = this.userId
-            this.$http.put("/edit-profile", this.userContact
-            ).then(response => {
-                router.push({name: 'myProfileRoute'}) /*TODO: pane siia alert ka*/
-            }).catch(error => {
-                router.push({name: 'errorRoute'})
-            })
+            if (this.userContact.firstName === '' || this.userContact.lastName === '' || this.userContact.email === '') {
+                this.$emit('event-error-message', 'Täida kõik väljad.')
+            } else {
+                this.userContact.userId = this.userId
+                this.$http.put("/edit-profile", this.userContact
+                ).then(response => {
+                    router.push({name: 'myProfileRoute'})
+                }).catch(error => {
+                    router.push({name: 'errorRoute'})
+                })
+            }
         },
 
 
