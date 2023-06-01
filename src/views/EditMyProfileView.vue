@@ -48,7 +48,7 @@
 
         </div>
     </div>
-<!--    <CustomFooter></CustomFooter>-->
+    <CustomFooter></CustomFooter>
 </template>
 
 <script>
@@ -63,8 +63,9 @@ export default {
     data() {
         return {
             message: '',
+            userId: Number(sessionStorage.getItem('userId')),
             userContact: {
-                userId: Number(sessionStorage.getItem('userId')),
+                userId: 0,
                 firstName: '',
                 lastName: '',
                 email: '',
@@ -83,20 +84,24 @@ export default {
         },
 
         editContact() {
-            this.userContact.userId = Number(sessionStorage.getItem('userId'))
-            this.$http.put("/edit-profile", this.userContact
-            ).then(response => {
-                router.push({name: 'myProfileRoute'})
-            }).catch(error => {
-                router.push({name: 'errorRoute'})
-            })
+            if (this.userContact.firstName === '' || this.userContact.lastName === '' || this.userContact.email === '') {
+                this.$emit('event-error-message', 'Täida kõik väljad.')
+            } else {
+                this.userContact.userId = this.userId
+                this.$http.put("/edit-profile", this.userContact
+                ).then(response => {
+                    router.push({name: 'myProfileRoute'})
+                }).catch(error => {
+                    router.push({name: 'errorRoute'})
+                })
+            }
         },
 
 
         getContact() {
             this.$http.get("/my-profile", {
                     params: {
-                        userId: this.userContact.userId
+                        userId: this.userId
                     }
                 }
             ).then(response => {

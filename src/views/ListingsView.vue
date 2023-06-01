@@ -16,8 +16,10 @@
                         <font-awesome-icon :icon="['fas', 'sort']" class="ms-1"/>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li><a @click="sortByPrice" class="dropdown-item" href="#">Hind</a></li>
-                        <li><a @click="sortByRating" class="dropdown-item" href="#">Reiting</a></li>
+                        <li><a @click="sortByPriceAsc" class="dropdown-item" href="#">Hind kasvav</a></li>
+                        <li><a @click="sortByPriceDesc" class="dropdown-item" href="#">Hind kahanev</a></li>
+                        <li><a @click="sortByRatingAsc" class="dropdown-item" href="#">Reiting kasvav</a></li>
+                        <li><a @click="sortByRatingDesc" class="dropdown-item" href="#">Reiting kahanev</a></li>
                     </ul>
                 </div>
             </div>
@@ -113,16 +115,22 @@ export default {
                 })
         },
 
-        sortByRating() {
-            alert("Sorteeri reitingu alusel")
-            this.$http.get("/listings-sortby-rating")
-                .then(response => {
-                    this.allListingsPreview = response.data
-                })
-                .catch(error => {
-                    router.push({name: 'errorRoute'})
-                })
+        sortByPriceAsc() {
+            this.allListingsPreview.sort((a, b) => a.price - b.price);
         },
+
+        sortByPriceDesc() {
+            this.allListingsPreview.sort((a, b) => b.price - a.price);
+        },
+
+        sortByRatingAsc() {
+            this.allListingsPreview.sort((a, b) => a.averageScore - b.averageScore);
+        },
+
+        sortByRatingDesc() {
+            this.allListingsPreview.sort((a, b) => b.averageScore - a.averageScore);
+        },
+
     },
     beforeMount() {
         this.getAllListingsPreview()

@@ -56,12 +56,11 @@
     </nav>
 </template>
 <script>
-
-import AddImageModal from "@/components/modals/AddImageModal.vue";
+import SignupInfoView from "@/views/SignupInfoView.vue";
 
 export default {
     name: 'CustomNavigationBar',
-    components: {AddImageModal},
+    components: {SignupInfoView},
     props: {
         handleLogout: {},
         userId: {},
