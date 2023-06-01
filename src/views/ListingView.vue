@@ -1,180 +1,227 @@
 <template>
-    <div class="container mt-5">
+    <div>
         <AlertDanger :message="message"/>
 
         <!-------- KOHA NIMI -------->
-        <div class="row justify-content-center mb-3">
-            <div class="col col-12 text-start">
-                <h1>{{ listingResponse.listingName }}</h1>
+        <div class="container-fluid pt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col col-12 text-start">
+                        <h1>{{ listingResponse.listingName }}</h1>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-------- PILDID JA KIRJELDUS -------->
-        <div class="row justify-content-center mb-5">
-            <div class="col col-5 text-start">
-                <div v-if="listingResponse.imagesData.length === 2">
-                    <font-awesome-icon :icon="['fass', 'image']" size="2xl"/>
+
+        <div class="container-fluid pt-5 pb-3">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col col-5 text-start">
+                        <div v-if="listingResponse.imagesData.length === 2">
+                            <font-awesome-icon :icon="['fass', 'image']" size="2xl"/>
+                        </div>
+                        <div v-else>
+                            <img class="figure-img listing-img" :src="listingResponse.imagesData[0]" alt="">
+                        </div>
+                    </div>
+                    <div class="col col-1 text-start"></div>
+                    <div class="col col-6 text-start">
+                        <div class="row justify-content-center">
+                            <div class="col-12 text-start mb-2">
+                                <h3>Kirjeldus:</h3>
+                            </div>
+                        </div>
+                        <p>{{ listingResponse.listingDescription }}</p>
+                    </div>
                 </div>
-                <div v-else>
-                    <img class="figure-img listing-img" :src="listingResponse.imagesData[0]" alt="">
-                </div>
-            </div>
-            <div class="col col-1 text-start"></div>
-            <div class="col col-6 text-start">
-                <h3>Kirjeldus:</h3>
-                <p>{{ listingResponse.listingDescription }}</p>
             </div>
         </div>
 
         <!-------- OMADUSED -------->
-        <div class="row justify-content-center mb-5">
-            <div class="col col-12 text-start">
-                <h3>Omadused</h3>
-                <ul class="list-unstyled ms-3">
-                    <li v-for="feature in listingResponse.features" :key="feature.featureName">
-                <span v-if="feature.featureIsSelected">
-                    <font-awesome-icon :icon="['fas', 'check']"/>
-                </span>
-                        <span v-else>
-                    <font-awesome-icon :icon="['fas', 'x']"/>
-                </span>
-                        {{ feature.featureName }}
-                    </li>
-                </ul>
+        <div class="container-fluid pt-5 pb-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-start mb-2">
+                        <h3>Omadused</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-6 text-start">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"
+                                v-for="feature in listingResponse.features.slice(0, listingResponse.features.length/2)"
+                                :key="feature.featureName">
+                                <span v-if="feature.featureIsSelected" class="me-2"><font-awesome-icon
+                                        :icon="['fas', 'check']"/></span>
+                                <span v-else class="me-2"><font-awesome-icon :icon="['fas', 'x']"/></span>
+                                {{ feature.featureName }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-6 text-start">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"
+                                v-for="feature in listingResponse.features.slice(listingResponse.features.length/2)"
+                                :key="feature.featureName">
+            <span v-if="feature.featureIsSelected" class="me-2">
+              <font-awesome-icon :icon="['fas', 'check']"/>
+            </span>
+                                <span v-else class="me-2">
+              <font-awesome-icon :icon="['fas', 'x']"/>
+            </span>
+                                {{ feature.featureName }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
+
 
         <!-------- ASUKOHT -------->
-        <div class="row justify-content-center mb-5">
-            <div class="col col-5 text-start">
-                <h3>Asukoht</h3>
-                <p><span class="fw-bold">Aadress:</span> {{ listingResponse.locationAddress }}
-                    {{ listingResponse.contact.lastName }}</p>
-                <p><span class="fw-bold">Latitude:</span> {{ listingResponse.locationLatitude }}</p>
-                <p><span class="fw-bold">Longitude:</span> {{ listingResponse.locationLongitude }}</p>
+        <div class="container-fluid custom-div-bg-1 pt-5 pb-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-6 text-start mb-2">
+                        <h3>Asukoht</h3>
+                    </div>
+                    <div class="col-6 text-start mb-2">
+                        <h3>Kontakt</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col col-5 text-start">
+                        <p><span class="fw-bold">Aadress:</span> {{ listingResponse.locationAddress }} |
+                            {{ listingResponse.countyName }}</p>
+                        <p><span class="fw-bold">Latitude:</span> {{ listingResponse.locationLatitude }}</p>
+                        <p><span class="fw-bold">Longitude:</span> {{ listingResponse.locationLongitude }}</p>
 
-                <div id=" map-container-google-2
-            " class="z-depth-1-half map-container-2">
-                    <iframe v-if="listingResponse.locationLongitude !== 0 || listingResponse.locationLatitude !== 0"
-                            :src="`https://maps.google.com/maps?q=${listingResponse.locationLongitude},${listingResponse.locationLatitude}&output=embed`"
-                            allowfullscreen></iframe>
-                    <iframe v-else
-                            src="https://www.google.com/maps/place/Estonia/@58.8056051,24.4744411,7.75z/data=!4m6!3m5!1s0x4692949c82a04bfd:0x40ea9fba4fb425c3!8m2!3d58.595272!4d25.0136071!16zL20vMDJrbW0?entry=ttu&output=embed`"
-                            allowfullscreen></iframe>
+                        <div id=" map-container-google-2
+            " class="z-depth-1-half map-container-2 mt-4">
+                            <iframe v-if="listingResponse.locationLongitude !== 0 || listingResponse.locationLatitude !== 0"
+                                    :src="`https://maps.google.com/maps?q=${listingResponse.locationLongitude},${listingResponse.locationLatitude}&output=embed`"
+                                    allowfullscreen></iframe>
+                            <iframe v-else
+                                    src="https://www.google.com/maps/place/Estonia/@58.8056051,24.4744411,7.75z/data=!4m6!3m5!1s0x4692949c82a04bfd:0x40ea9fba4fb425c3!8m2!3d58.595272!4d25.0136071!16zL20vMDJrbW0?entry=ttu&output=embed`"
+                                    allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="col col-1 text-start">
+                    </div>
+                    <!-------- KONTAKT -------->
+                    <div class="col col-4 text-start">
+                        <p><span class="fw-bold">Võõrustaja:</span> {{ listingResponse.contact.firstName }}
+                            {{ listingResponse.contact.lastName }}</p>
+                        <p><span class="fw-bold">E-post:</span> {{ listingResponse.contact.email }}</p>
+                        <p><span class="fw-bold">Telefon:</span> {{ listingResponse.contact.phoneNo }}</p>
+                        <!-------- LISAINFO -------->
+                        <div class="col col-12 text-start mt-4">
+                            <h3>Lisainfo</h3>
+                            <p>{{ listingResponse.listingAdditionalInfo }}</p>
+                        </div>
+                    </div>
+                    <div class="col col-2">
+                        <div v-if="listingResponse.contact.imageData === 0">
+                            <font-awesome-icon :icon="['fass', 'image']" size="2xl"/>
+                        </div>
+                        <div v-else>
+                            <img class="figure-img profile-img" :src="listingResponse.contact.imageData"/>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
-            <div class="col col-1 text-start">
-            </div>
-            <div class="col col-3 text-start">
-                <h3>Kontakt</h3>
-                <p><span class="fw-bold">Võõrustaja:</span> {{ listingResponse.contact.firstName }}
-                    {{ listingResponse.contact.lastName }}</p>
-                <p><span class="fw-bold">E-post:</span> {{ listingResponse.contact.email }}</p>
-                <p><span class="fw-bold">Telefon:</span> {{ listingResponse.contact.phoneNo }}</p>
-            </div>
-            <div class="col col-3">
-                <div v-if="listingResponse.contact.imageData === 0">
-                    <font-awesome-icon :icon="['fass', 'image']" size="2xl"/>
-                </div>
-                <div v-else>
-                    <img class="figure-img profile-img" :src="listingResponse.contact.imageData"/>
-                </div>
-
-            </div>
-
         </div>
 
-
-
-
-
-        <!-------- LISAINFO -------->
-        <div class="row justify-content-center mb-5">
-            <div class="col col-12 text-start">
-                <h3>Lisainfo</h3>
-                <p>{{ listingResponse.listingAdditionalInfo }}</p>
-            </div>
-        </div>
 
         <!-------- BRONEERI -------->
-        <div class="row justify-content-center">
-            <div class="col col-12 text-start">
-                <h3 class="mb-4">Broneeri</h3>
-                <AlertDanger :message="messageDate"/>
+        <div class="container-fluid pt-5 pb-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col col-12 text-start">
+                        <h3 class="mb-4">Broneeri</h3>
+                        <AlertDanger :message="messageDate"/>
 
-                <div class="row justify-content-center mb-5">
-                    <div class="col col-6 text-start">
-                        <div class="booking-form">
-                            <form>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <span class="form-label">Saabumine</span>
-                                            <input v-model="checkInDate" class="form-control" type="date"
-                                                   required>
+                        <div class="row justify-content-center mb-4">
+                            <div class="col col-6 text-start">
+                                <div class="booking-form">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <span class="form-label">Saabumine</span>
+                                                    <input v-model="checkInDate" class="form-control" type="date"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <span class="form-label">Lahkumine</span>
+                                                    <input v-model="checkOutDate" class="form-control" type="date"
+                                                           required>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <span class="form-label">Lahkumine</span>
-                                            <input v-model="checkOutDate" class="form-control" type="date"
-                                                   required>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <span class="form-label">Telkide arv</span>
+                                                    <select v-model="numberOfTents" class="form-control">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                    </select>
+                                                    <span class="select-arrow"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <span class="form-label">Inimeste arv</span>
+                                                    <select v-model="numberOfPeople" class="form-control">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                        <option>6</option>
+                                                        <option>7</option>
+                                                        <option>8</option>
+                                                        <option>9</option>
+                                                        <option>10</option>
+                                                    </select>
+                                                    <span class="select-arrow"></span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="form-btn text-center">
+                                            <button class="submit-btn">Broneeri</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <span class="form-label">Telkide arv</span>
-                                            <select v-model="numberOfTents" class="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                            <span class="select-arrow"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <span class="form-label">Inimeste arv</span>
-                                            <select v-model="numberOfPeople" class="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                                <option>6</option>
-                                                <option>7</option>
-                                                <option>8</option>
-                                                <option>9</option>
-                                                <option>10</option>
-                                            </select>
-                                            <span class="select-arrow"></span>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="col col-1">
+                            </div>
+                            <div class="col col-5">
+                                <div class="col col-6 text-start booking-summary">
+                                    <p class="mb-3 fw-bold">Broneeringu kokkuvõte:</p>
+                                    <p>Inimeste arv: {{ numberOfPeople }} </p>
+                                    <p>Ööde arv: {{ calculateNumberOfNights() }} </p>
+                                    <p>Hind inimese kohta / öö: {{ listingResponse.price }} €</p>
+                                    <p>Hind kokku: {{ calculateTotalPrice() }} €</p>
                                 </div>
-                                <div class="form-btn text-center">
-                                    <button class="submit-btn">Broneeri</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col col-1">
-                    </div>
-                    <div class="col col-5">
-                        <div class="col col-6 text-start booking-summary">
-                            <p class="mb-3 fw-bold">Broneeringu kokkuvõte:</p>
-                            <p>Inimeste arv: {{ numberOfPeople }} </p>
-                            <p>Ööde arv: {{ calculateNumberOfNights() }} </p>
-                            <p>Hind inimese kohta / öö: {{ listingResponse.price }} €</p>
-                            <p>Hind kokku: {{ calculateTotalPrice() }} €</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <CustomFooter></CustomFooter>
@@ -422,6 +469,10 @@ export default {
     height: 100%;
     width: 100%;
     position: absolute;
+}
+
+.custom-div-bg-1 {
+    background-color: #bee8d4;
 }
 
 

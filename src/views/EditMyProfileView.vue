@@ -64,8 +64,9 @@ export default {
     data() {
         return {
             message: '',
+            userId: Number(sessionStorage.getItem('userId')),
             userContact: {
-                userId: Number(sessionStorage.getItem('userId')),
+                userId: 0,
                 firstName: '',
                 lastName: '',
                 email: '',
@@ -84,7 +85,7 @@ export default {
         },
 
         editContact() {
-            this.userContact.userId = Number(sessionStorage.getItem('userId'))
+            this.userContact.userId = this.userId
             this.$http.put("/edit-profile", this.userContact
             ).then(response => {
                 router.push({name: 'myProfileRoute'}) /*TODO: pane siia alert ka*/
@@ -97,7 +98,7 @@ export default {
         getContact() {
             this.$http.get("/my-profile", {
                     params: {
-                        userId: this.userContact.userId
+                        userId: this.userId
                     }
                 }
             ).then(response => {
