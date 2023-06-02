@@ -87,7 +87,7 @@
                     <label for="listingDescription" class="form-label">Lisa pildid:</label><br>
                     <!--<button @click="addListingInfo" type="submit" class="btn btn-dark me-3">Lisa pildid</button>-->
                     <img v-if="addFullListing.imagesData[0] === ''"
-                         src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                         src="../assets/logoTelk.png"
                          class="img-thumbnail mb-3" alt="profile image"/>
                     <img v-else :src="addFullListing.imagesData[0]" class="img-thumbnail mb-3" alt="image"/>
                     <br>

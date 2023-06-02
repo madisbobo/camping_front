@@ -84,7 +84,7 @@
             <div class="col col-4 mb-4">
                 <div class="mb-3 text-start">
                     <label for="listingDescription" class="form-label">Lisa pildid:</label><br>
-                    <img v-if="addFullListing.imagesData[0] === '' || addFullListing.imagesData[0].length === 3"
+                    <img v-if="addFullListing.imagesData[0] === '' || addFullListing.imagesData.length === 0"
                          src="../assets/logoTelk.png"
                          class="img-thumbnail mb-3" alt="profile image"/>
                     <img v-else :src="addFullListing.imagesData[0]" class="img-thumbnail mb-3" alt="image"/>
