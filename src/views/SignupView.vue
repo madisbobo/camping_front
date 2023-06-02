@@ -1,5 +1,5 @@
 <template>
-    <div @keydown.enter="signup" class="container mt-4">
+    <div @keydown.enter="signup" class="container mt-5">
 
         <AlertDanger :message="message"/>
 
@@ -35,6 +35,8 @@
                 <button @click="signup" type="submit" class="btn btn-dark mb-3">Registreeri</button>
             </div>
         </div>
+
+
 
 
     </div>

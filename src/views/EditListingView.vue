@@ -148,7 +148,7 @@
     <div class="row justify-content-center mb-4 mt-4">
         <div class="col col-4">
             <button @click="addListingInfo" type="submit" class="btn btn-dark me-3">Muuda</button>
-            <button @click="router().push({name: 'myListingsRoute'})" type="button" class="btn btn-dark ms-3">Loobu
+            <button @click="router().push({name: 'myListingsRoute'})" type="button" class="btn btn-outline-dark ms-3">Loobu
             </button>
         </div>
     </div>
@@ -281,12 +281,10 @@ export default {
 
         setImage(selectedImage) {
             this.addFullListing.imagesData[0] = selectedImage
-            alert(this.addFullListing.imagesData[0])
         },
 
         addListingInfo() {
             this.mapToAddFullListing()
-            alert(this.addFullListing.locationId)
             if (this.addFullListing.description === '' || this.addFullListing.locationAddress === '') {
                 this.message = 'Täida kõik kohustuslikud väljad ja/või lisa vähemalt üks pilt'
             } else {

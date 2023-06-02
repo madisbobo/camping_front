@@ -6,7 +6,7 @@
                 <div class="text-white">
                     <h1 class="mb-3">Tule telkima</h1>
                     <h4 class="mb-5">Tule ja avasta ägedaid telkimiskohti üle Eesti</h4>
-                    <a class="btn btn-outline-light btn-lg" href="#!" role="button">Vaata telkimiskohti</a>
+                    <a class="btn btn-outline-light btn-lg" @click="router().push({name: 'listingsRoute'})" role="button">Vaata telkimiskohti</a>
                 </div>
             </div>
     </div>

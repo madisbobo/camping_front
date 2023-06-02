@@ -34,7 +34,7 @@
 
             <!--Add profile image-->
             <div class="col col-4 mb-4">
-                <img :src="userContact.imageData" class="img-thumbnail" alt="profile image"/>
+                <img :src="userContact.imageData" class="custom-img mb-3" alt="profile image"/>
                 <ImageInput @event-emit-base64="setImage"/>
                 <div/>
             </div>
@@ -44,7 +44,7 @@
         <div class="row justify-content-center mb-4 mt-4">
             <div class="col col-4">
                 <button @click="editContact" type="submit" class="btn btn-dark me-3">Kinnita</button>
-                <button @click="toMyProfile" type="button" class="btn btn-dark ms-3">Tagasi</button>
+                <button @click="toMyProfile" type="button" class="btn btn-outline-dark ms-3">Tagasi</button>
             </div>
 
         </div>
@@ -122,5 +122,11 @@ export default {
 </script>
 
 <style scoped>
+
+.custom-img {
+    width: 200px;
+    border-radius: 100%;
+
+}
 
 </style>
