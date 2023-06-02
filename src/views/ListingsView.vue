@@ -66,16 +66,6 @@ export default {
             filterParameters: {
                 locationCountyId: 0,
             },
-            filteredListingsPreview: [
-                {
-                    listingId: 0,
-                    listingName: '',
-                    price: 0,
-                    imageData: '',
-                    numberOfScores: 0,
-                    averageScore: 0.0
-                }
-            ],
         }
     },
     methods: {

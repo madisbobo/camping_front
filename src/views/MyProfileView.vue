@@ -32,7 +32,7 @@
 
             <!--Add profile image-->
             <div class="col col-4 mb-4 justify-content-center">
-                <img :src="userContact.imageData" class="img-thumbnail" alt="profile image"/>
+                <img :src="userContact.imageData" class="custom-img" alt="profile image"/>
                 <div/>
             </div>
         </div>
@@ -97,3 +97,13 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+.custom-img {
+    width: 200px;
+    border-radius: 100%;
+
+}
+
+</style>

@@ -67,7 +67,6 @@ export default {
     components: {CustomFooter, ImageInput, AlertDanger},
     data() {
         return {
-            contactAdded: false,
             message: '',
             userContact: {
                 userId: Number(sessionStorage.getItem('userId')),

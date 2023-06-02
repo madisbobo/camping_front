@@ -19,7 +19,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col col-5 text-start">
-                        <div v-if="listingResponse.imagesData.length === 2">
+                        <div v-if="listingResponse.imagesData.length === 0 || listingResponse.imagesData[0] === ''">
                             <font-awesome-icon :icon="['fass', 'image']" size="2xl"/>
                         </div>
                         <div v-else>
