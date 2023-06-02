@@ -92,7 +92,6 @@ export default {
                 }
             ).then(response => {
                 this.loginResponse = response.data
-                alert(this.loginResponse.profileIsCompleted)
                 sessionStorage.setItem('userId', this.loginResponse.userId)
                 sessionStorage.setItem('roleName', this.loginResponse.roleName)
                 sessionStorage.setItem('username', this.username)
@@ -108,7 +107,6 @@ export default {
                 if (this.errorResponse.errorCode === 111) {
                     this.message = this.errorResponse.message
                 } else {
-                    alert(this.errorResponse.errorCode)
                     router.push({name:'errorRoute'})
                 }
 
