@@ -94,8 +94,8 @@
                     <div class="col col-5 text-start">
                         <p><span class="fw-bold">Aadress:</span> {{ listingResponse.locationAddress }} |
                             {{ listingResponse.countyName }}</p>
-                        <p><span class="fw-bold">Latitude:</span> {{ listingResponse.locationLatitude }}</p>
                         <p><span class="fw-bold">Longitude:</span> {{ listingResponse.locationLongitude }}</p>
+                        <p><span class="fw-bold">Latitude:</span> {{ listingResponse.locationLatitude }}</p>
 
                         <div id=" map-container-google-2
             " class="z-depth-1-half map-container-2 mt-4">

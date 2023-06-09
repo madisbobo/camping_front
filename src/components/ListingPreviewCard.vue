@@ -20,7 +20,7 @@
                         <button @click="editListing(listing.listingId)" type="button" class="btn btn-dark">Muuda</button>
                     </div>
                     <div class="col col-6">
-                        <button @click="activateDeleteModal" type="button" class="btn btn-outline-dark">Kustuta</button>
+                        <button @click="activateDeleteModal(listing.listingId)" type="button" class="btn btn-outline-dark">Kustuta</button>
                     </div>
                 </div>
             </div>
@@ -38,15 +38,16 @@ export default {
     props: {
         listingsPreview: {},
         showButtons: false,
-        selectedListingId: 0
+        selectedListingId: []
     },
+
     methods: {
         editListing(listingId) {
             router.push({name: 'editListingRoute', params: {id: listingId}})
         },
 
-        activateDeleteModal() {
-            this.$refs.deleteListingModalRef.$refs.modalRef.openModal()
+        activateDeleteModal(listingId) {
+            this.$refs.deleteListingModalRef.activateDelete(listingId)
         },
         navigateToListing(listingId) {
             router.push({name: 'listingRoute', params: {id: listingId}})

@@ -9,7 +9,7 @@
             (Me tegelikult lihtsalt deaktiveerime selle staatuse.)
         </template>
         <template #footer>
-            <button @click="deleteListing" :selectedListingId type="button" class="btn btn-warning">Jah</button>
+            <button @click="deleteListing" type="button" class="btn btn-warning">Jah</button>
         </template>
     </modal>
 
@@ -22,21 +22,26 @@ import router from "@/router";
 export default {
     name: "DeleteListingModal",
     components: {Modal},
+    emits: ['event-listing-deleted'],
     data() {
         return {
-            selectedListingId: 0,
+            listingId: null
         }
     },
     methods: {
+        activateDelete(listingId) {
+            this.listingId = listingId
+            this.$refs.modalRef.openModal()
+        },
         deleteListing() {
             this.$http.delete("/my-listings", {
                     params: {
-                        listingId: this.selectedListingId
+                        listingId: this.listingId
                     }
                 }
             ).then(response => {
                 this.$emit('event-listing-deleted', 'Telkimisplatsi info on kustutatud')
-                router.push({name: 'myListingsRoute'})
+                router.push({name: 'homeRoute'})
                 this.$refs.modalRef.closeModal()
             }).catch(error => {
                 router.push({name: 'errorRoute'})
