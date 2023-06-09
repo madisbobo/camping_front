@@ -297,7 +297,7 @@ export default {
             })
         },
         openMap() {
-            alert("Open map")
+
             if (this.listingResponse.locationLatitude === 0 || this.listingResponse.locationLongitude === 0) {
 
             }

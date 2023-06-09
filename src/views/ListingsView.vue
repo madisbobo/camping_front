@@ -3,9 +3,8 @@
         <div class="row justify-content-center mt-5 mb-3">
             <div class="col col-4 mb-4 text-start">
                 <button @click="activateFilterModal" class="btn" type="button">
-                    <p>Filtreeri
-                        <font-awesome-icon :icon="['fas', 'filter']"/>
-                    </p>
+                    Filtreeri
+                    <font-awesome-icon :icon="['fas', 'filter']"/>
                 </button>
             </div>
             <div class="col col-4 mb-4 text-end">
@@ -92,17 +91,6 @@ export default {
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             });
-        },
-
-        sortByPrice() {
-            alert("Sorteeri hinna alusel")
-            this.$http.get("/listings-sortby-price-asc")
-                .then(response => {
-                    this.allListingsPreview = response.data
-                })
-                .catch(error => {
-                    router.push({name: 'errorRoute'})
-                })
         },
 
         sortByPriceAsc() {

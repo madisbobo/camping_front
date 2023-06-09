@@ -20,38 +20,33 @@
                         <button @click="editListing(listing.listingId)" type="button" class="btn btn-dark">Muuda</button>
                     </div>
                     <div class="col col-6">
-                        <button @click="deleteListing(listing.listingId)" type="button" class="btn btn-outline-dark">Kustuta</button>
+                        <button @click="activateDeleteModal" type="button" class="btn btn-outline-dark">Kustuta</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <delete-listing-modal ref="deleteListingModalRef"/>
 </template>
 <script>
 import router from "@/router";
+import DeleteListingModal from "@/components/modals/DeleteListingModal.vue";
 
 export default {
     name: 'ListingPreviewCard',
+    components: {DeleteListingModal},
     props: {
         listingsPreview: {},
         showButtons: false,
+        selectedListingId: 0
     },
     methods: {
         editListing(listingId) {
             router.push({name: 'editListingRoute', params: {id: listingId}})
         },
 
-        deleteListing(listingId) {
-            this.$http.delete("/my-listings", {
-                    params: {
-                        listingId: listingId,
-                    }
-                }
-            ).then(response => {
-                this.$emit('event-update-page')
-            }).catch(error => {
-                router.push({name: 'errorRoute'})
-            })
+        activateDeleteModal() {
+            this.$refs.deleteListingModalRef.$refs.modalRef.openModal()
         },
         navigateToListing(listingId) {
             router.push({name: 'listingRoute', params: {id: listingId}})

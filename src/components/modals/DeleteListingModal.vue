@@ -9,7 +9,7 @@
             (Me tegelikult lihtsalt deaktiveerime selle staatuse.)
         </template>
         <template #footer>
-            <button @click="deleteListing()" type="button" class="btn btn-warning">Jah</button>
+            <button @click="deleteListing" :selectedListingId type="button" class="btn btn-warning">Jah</button>
         </template>
     </modal>
 
@@ -24,22 +24,20 @@ export default {
     components: {Modal},
     data() {
         return {
-            selectedListingId: 0
+            selectedListingId: 0,
         }
     },
     methods: {
-        setSelectedListingId(selectedListingId) {
-            this.selectedListingId = selectedListingId
-        },
         deleteListing() {
             this.$http.delete("/my-listings", {
                     params: {
-                        listingId: this.listingId
+                        listingId: this.selectedListingId
                     }
                 }
             ).then(response => {
-                this.$refs.modalRef.closeModal()
                 this.$emit('event-listing-deleted', 'Telkimisplatsi info on kustutatud')
+                router.push({name: 'myListingsRoute'})
+                this.$refs.modalRef.closeModal()
             }).catch(error => {
                 router.push({name: 'errorRoute'})
             })
